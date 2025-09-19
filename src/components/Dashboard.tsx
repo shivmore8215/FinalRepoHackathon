@@ -3,39 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrainCard } from "./TrainCard";
-import { SchedulingPanel } from "./SchedulingPanel";
+import { AISchedulingPanel } from "./AISchedulingPanel";
 import { SystemMetrics } from "./SystemMetrics";
 import { Clock, Train, AlertTriangle, CheckCircle } from "lucide-react";
+import { useTrainData } from "@/hooks/useTrainData";
 
-interface TrainSet {
-  id: string;
-  number: string;
-  status: "ready" | "standby" | "maintenance" | "critical";
-  fitnessExpiry: Date;
-  jobCardStatus: "open" | "closed";
-  brandingPriority: number;
-  mileage: number;
-  lastCleaning: Date;
-  bayPosition: number;
-  availability: number;
-}
-
-const mockTrainSets: TrainSet[] = Array.from({ length: 25 }, (_, i) => ({
-  id: `ts-${i + 1}`,
-  number: `KMRL-${String(i + 1).padStart(3, '0')}`,
-  status: ["ready", "standby", "maintenance", "critical"][Math.floor(Math.random() * 4)] as TrainSet["status"],
-  fitnessExpiry: new Date(Date.now() + Math.random() * 30 * 24 * 60 * 60 * 1000),
-  jobCardStatus: Math.random() > 0.3 ? "closed" : "open",
-  brandingPriority: Math.floor(Math.random() * 10) + 1,
-  mileage: Math.floor(Math.random() * 50000) + 10000,
-  lastCleaning: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
-  bayPosition: i + 1,
-  availability: Math.floor(Math.random() * 30) + 85,
-}));
 
 export const Dashboard = () => {
-  const [trainSets, setTrainSets] = useState<TrainSet[]>(mockTrainSets);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const { trainSets, metrics, loading, error } = useTrainData();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,10 +20,10 @@ export const Dashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const readyCount = trainSets.filter(t => t.status === "ready").length;
-  const standbyCount = trainSets.filter(t => t.status === "standby").length;
-  const maintenanceCount = trainSets.filter(t => t.status === "maintenance").length;
-  const criticalCount = trainSets.filter(t => t.status === "critical").length;
+  const readyCount = metrics?.ready || 0;
+  const standbyCount = metrics?.standby || 0;
+  const maintenanceCount = metrics?.maintenance || 0;
+  const criticalCount = metrics?.critical || 0;
 
   const isPlanningWindow = currentTime.getHours() >= 21 || currentTime.getHours() <= 23;
 
@@ -81,7 +57,7 @@ export const Dashboard = () => {
         standby={standbyCount}
         maintenance={maintenanceCount}
         critical={criticalCount}
-        totalFleet={25}
+        totalFleet={metrics?.totalFleet || 25}
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
@@ -104,9 +80,9 @@ export const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Scheduling Panel */}
+        {/* AI Scheduling Panel */}
         <div className="xl:col-span-1">
-          <SchedulingPanel trainSets={trainSets} />
+          <AISchedulingPanel trainSets={trainSets} />
         </div>
       </div>
     </div>
