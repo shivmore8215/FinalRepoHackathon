@@ -9,17 +9,20 @@ import { AISchedulingPanel } from "./AISchedulingPanel"
 import { ReportsPanel } from "./ReportsPanel"
 import { SettingsPanel } from './SettingsPanel-simple'
 import { useTrainsets, useRealtimeMetrics, useDailySchedule, useKPIs } from "@/hooks/useTrainData"
-import { Train, RefreshCw, Settings, BarChart3 } from "lucide-react"
+import { Train, RefreshCw, Settings, BarChart3, LogOut, UserCheck } from "lucide-react"
 import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
+import { useAuth } from "@/contexts/AuthContext"
+import { Link } from "react-router-dom"
 
 export function Dashboard() {
-  const { data: trainsets = [], isLoading: trainsetsLoading, refetch: refetchTrainsets } = useTrainsets()
+  const { data: trainsets = [], refetch: refetchTrainsets } = useTrainsets()
   const { data: metrics, isLoading: metricsLoading, refetch: refetchMetrics } = useRealtimeMetrics()
   const { data: scheduleData = [], refetch: refetchSchedule } = useDailySchedule(new Date().toISOString().split('T')[0])
   const { data: kpiData = [], refetch: refetchKPIs } = useKPIs()
   const { toast } = useToast()
+  const { user, logout } = useAuth()
   
   const [activeTab, setActiveTab] = useState('manual')
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -62,6 +65,14 @@ export function Dashboard() {
     })
   }
 
+  const handleLogout = () => {
+    logout()
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out.",
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
@@ -76,6 +87,11 @@ export function Dashboard() {
                 <h1 className="text-xl font-bold text-gray-900">Train Plan Wise</h1>
                 <p className="text-sm text-gray-600">Kochi Metro Rail Limited</p>
               </div>
+              {user && (
+                <div className="ml-4 px-3 py-1 bg-blue-100 rounded-full">
+                  <span className="text-sm text-blue-800 font-medium">Welcome, {user.fullName}</span>
+                </div>
+              )}
             </div>
             <div className="flex items-center space-x-4">
               <Button 
@@ -112,6 +128,29 @@ export function Dashboard() {
               >
                 <BarChart3 className="h-4 w-4 mr-2" />
                 Reports
+              </Button>
+              
+              {user?.role === 'super_admin' && (
+                <Link to="/admin/approvals">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="hover:bg-indigo-50"
+                  >
+                    <UserCheck className="h-4 w-4 mr-2" />
+                    User Approvals
+                  </Button>
+                </Link>
+              )}
+              
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={handleLogout}
+                className="hover:bg-red-50"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
               </Button>
             </div>
           </div>

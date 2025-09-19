@@ -1,0 +1,34 @@
+// Simple test to verify the signup API works
+const testSignup = async () => {
+  try {
+    console.log('Testing signup API...');
+    
+    const response = await fetch('http://localhost:5000/api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: 'testuser456',
+        email: 'testuser456@example.com',
+        password: 'password123',
+        fullName: 'Test User 456'
+      }),
+    });
+
+    console.log('Response status:', response.status);
+    const data = await response.json();
+    
+    if (response.ok) {
+      console.log('✅ Signup successful!');
+      console.log('Response:', data);
+    } else {
+      console.log('❌ Signup failed!');
+      console.log('Error:', data);
+    }
+  } catch (error) {
+    console.error('❌ Network error:', error.message);
+  }
+};
+
+testSignup();

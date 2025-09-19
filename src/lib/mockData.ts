@@ -1,3 +1,7 @@
+// ⚠️ DEPRECATED: This file is no longer used. All data is now stored in MongoDB.
+// The application now fetches real-time data from the database instead of static mock data.
+// This file is kept for reference only and can be safely deleted.
+
 // Mock data for the RL agent to work without Supabase
 export const mockTrainsets = [
   {
