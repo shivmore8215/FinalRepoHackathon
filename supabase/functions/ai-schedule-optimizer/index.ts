@@ -95,8 +95,19 @@ serve(async (req) => {
       weather_forecast: await getWeatherData(), // Placeholder for weather API
     }
 
-    // Call DeepSeek API for AI optimization
-    const aiRecommendations = await callDeepSeekAPI(secrets.decrypted_secret, aiInput)
+    // Call DeepSeek API for AI optimization with fallback
+    let aiRecommendations
+    const startTime = Date.now()
+    
+    try {
+      aiRecommendations = await callDeepSeekAPI(secrets.decrypted_secret, aiInput)
+    } catch (aiError) {
+      console.error('AI API failed, using rule-based fallback:', aiError.message)
+      aiRecommendations = generateRuleBasedRecommendations(trainsets)
+    }
+    
+    const processingTime = Date.now() - startTime
+    console.log(`AI processing completed in ${processingTime}ms`)
 
     // Process and validate AI recommendations
     const processedRecommendations = await processAIRecommendations(
@@ -185,30 +196,78 @@ Respond with a JSON array of recommendations, each containing:
 - priority_score: number (1-10, higher = more critical)
 - risk_factors: string[] (potential issues)`
 
-  const response = await fetch('https://api.deepseek.com/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'deepseek-chat',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Optimize train scheduling for ${input.schedule_date}: ${JSON.stringify(input)}` }
-      ],
-      temperature: 0.2,
-      max_tokens: 4000,
-      response_format: { type: "json_object" }
+  // Production optimizations
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 second timeout
+
+  try {
+
+    const response = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'User-Agent': 'KMRL-TrainPlanner/1.0',
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: `Optimize train scheduling for ${input.schedule_date}: ${JSON.stringify(input)}` }
+        ],
+        temperature: parseFloat(Deno.env.get('AI_TEMPERATURE') || '0.2'),
+        max_tokens: parseInt(Deno.env.get('AI_MAX_TOKENS') || '4000'),
+        response_format: { type: "json_object" }
+      }),
+      signal: controller.signal
     })
-  })
 
-  if (!response.ok) {
-    throw new Error(`DeepSeek API error: ${response.statusText}`)
+    clearTimeout(timeoutId)
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(`DeepSeek API error: ${response.status} - ${errorText}`)
+    }
+
+    const result = await response.json()
+    
+    // Enhanced validation
+    if (!result.choices?.[0]?.message?.content) {
+      throw new Error('Invalid API response structure')
+    }
+
+    const content = result.choices[0].message.content
+    let parsed
+    
+    try {
+      parsed = JSON.parse(content)
+    } catch (parseError) {
+      console.error('Failed to parse AI response:', content)
+      throw new Error('Invalid JSON response from AI model')
+    }
+
+    // Validate response structure
+    if (!parsed.recommendations || !Array.isArray(parsed.recommendations)) {
+      throw new Error('Invalid recommendation structure from AI')
+    }
+
+    return parsed
+  } catch (error) {
+    clearTimeout(timeoutId)
+    
+    if (error.name === 'AbortError') {
+      throw new Error('AI request timed out after 30 seconds')
+    }
+    
+    // Log error for monitoring
+    console.error('DeepSeek API Error:', {
+      error: error.message,
+      timestamp: new Date().toISOString(),
+      input_size: JSON.stringify(input).length
+    })
+    
+    throw error
   }
-
-  const result = await response.json()
-  return JSON.parse(result.choices[0].message.content)
 }
 
 async function processAIRecommendations(
@@ -295,4 +354,78 @@ function generateSchedulingSummary(recommendations: AIRecommendation[], trainset
     high_risk_count: recommendations.filter(r => r.risk_factors.length > 0).length,
     optimization_timestamp: new Date().toISOString()
   }
+}
+
+// Rule-based fallback when AI is unavailable
+function generateRuleBasedRecommendations(trainsets: TrainsetData[]): any {
+  const recommendations: AIRecommendation[] = []
+  
+  for (const trainset of trainsets) {
+    let recommendedStatus = 'ready'
+    let reasoning: string[] = ['Rule-based recommendation due to AI unavailability']
+    let priorityScore = 5
+    let riskFactors: string[] = []
+    let confidenceScore = 0.7 // Lower confidence for rule-based
+    
+    // Critical status conditions (highest priority)
+    if (trainset.fitness_certificates?.some(cert => new Date(cert.expiry_date) <= new Date())) {
+      recommendedStatus = 'critical'
+      reasoning.push('Fitness certificate expired')
+      priorityScore = 10
+      riskFactors.push('Safety certificate expired')
+      confidenceScore = 0.95
+    } else if (trainset.availability_percentage < 75) {
+      recommendedStatus = 'critical'
+      reasoning.push(`Low availability: ${trainset.availability_percentage}%`)
+      priorityScore = 9
+      riskFactors.push('Low system availability')
+      confidenceScore = 0.9
+    } else if (trainset.job_cards?.some(jc => jc.status === 'open' && jc.priority >= 4)) {
+      recommendedStatus = 'critical'
+      reasoning.push('High priority maintenance required')
+      priorityScore = 8
+      riskFactors.push('Critical maintenance pending')
+      confidenceScore = 0.85
+    }
+    // Maintenance conditions
+    else if (trainset.availability_percentage < 90) {
+      recommendedStatus = 'maintenance'
+      reasoning.push('Preventive maintenance recommended')
+      priorityScore = 6
+      confidenceScore = 0.8
+    } else if (trainset.job_cards?.filter(jc => jc.status === 'open').length > 2) {
+      recommendedStatus = 'maintenance'
+      reasoning.push('Multiple open job cards')
+      priorityScore = 5
+      confidenceScore = 0.75
+    }
+    // Ready/Standby logic
+    else if (trainset.branding_priority > 7) {
+      recommendedStatus = 'ready'
+      reasoning.push('High branding priority')
+      priorityScore = 3
+      confidenceScore = 0.8
+    } else if (trainset.availability_percentage >= 95) {
+      recommendedStatus = Math.random() > 0.7 ? 'ready' : 'standby' // Balance ready vs standby
+      reasoning.push('High availability, optimal for service')
+      priorityScore = 2
+      confidenceScore = 0.7
+    } else {
+      recommendedStatus = 'standby'
+      reasoning.push('Suitable for backup service')
+      priorityScore = 4
+      confidenceScore = 0.65
+    }
+    
+    recommendations.push({
+      trainset_id: trainset.id,
+      recommended_status: recommendedStatus,
+      confidence_score: confidenceScore,
+      reasoning,
+      priority_score: priorityScore,
+      risk_factors: riskFactors
+    })
+  }
+  
+  return { recommendations, fallback_mode: true }
 }

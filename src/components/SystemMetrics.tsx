@@ -1,133 +1,183 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { 
-  CheckCircle, 
-  Clock, 
-  Wrench, 
-  AlertTriangle,
-  Target,
-  TrendingUp,
-  Activity
-} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { Badge } from "@/components/ui/badge"
+import { Activity, Clock, Wrench, Zap, TrendingUp, AlertTriangle } from "lucide-react"
 
 interface SystemMetricsProps {
-  ready: number;
-  standby: number;
-  maintenance: number;
-  critical: number;
-  totalFleet: number;
+  metrics?: any
+  isLoading: boolean
 }
 
-export const SystemMetrics = ({
-  ready,
-  standby,
-  maintenance,
-  critical,
-  totalFleet
-}: SystemMetricsProps) => {
-  const serviceableCount = ready + standby;
-  const serviceability = Math.round((serviceableCount / totalFleet) * 100);
-  const currentPunctuality = 99.2; // Mock data
-  const targetPunctuality = 99.5;
+export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[...Array(4)].map((_, i) => (
+          <Card key={i} className="animate-pulse">
+            <CardHeader className="pb-2">
+              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+            </CardHeader>
+            <CardContent>
+              <div className="h-8 bg-gray-200 rounded w-1/2 mb-2"></div>
+              <div className="h-2 bg-gray-200 rounded"></div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    )
+  }
+
+  const fleetStatus = metrics?.fleet_status || {}
+  const currentKPIs = metrics?.current_kpis || {}
+  const planningStatus = metrics?.planning_status || {}
+
+  const metricsData = [
+    {
+      title: "Fleet Availability",
+      value: `${fleetStatus.serviceability || 0}%`,
+      progress: fleetStatus.serviceability || 0,
+      icon: Activity,
+      color: "text-green-600",
+      bgColor: "bg-green-50",
+      description: `${fleetStatus.ready || 0} ready, ${fleetStatus.standby || 0} standby`
+    },
+    {
+      title: "Punctuality",
+      value: `${currentKPIs.punctuality || 99.2}%`,
+      progress: currentKPIs.punctuality || 99.2,
+      icon: Clock,
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
+      description: "On-time performance"
+    },
+    {
+      title: "Maintenance Cost",
+      value: `₹${currentKPIs.maintenance_cost || 0}`,
+      progress: 75,
+      icon: Wrench,
+      color: "text-orange-600",
+      bgColor: "bg-orange-50",
+      description: "This month"
+    },
+    {
+      title: "Energy Efficiency",
+      value: `${currentKPIs.energy_consumption || 0} kWh`,
+      progress: 85,
+      icon: Zap,
+      color: "text-purple-600",
+      bgColor: "bg-purple-50",
+      description: "Average consumption"
+    }
+  ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-      {/* Fleet Status Cards */}
-      <Card className="border-l-4 border-l-status-ready">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Ready for Service</p>
-              <p className="text-2xl font-bold text-status-ready">{ready}</p>
+    <div className="space-y-6">
+      {/* Main Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {metricsData.map((metric, index) => (
+          <Card key={index} className="metric-card">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                {metric.title}
+              </CardTitle>
+              <metric.icon className={`h-4 w-4 ${metric.color}`} />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-gray-900 mb-1">
+                {metric.value}
+              </div>
+              <div className="text-xs text-gray-500 mb-2">
+                {metric.description}
+              </div>
+              <Progress value={metric.progress} className="h-2" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Fleet Status Summary */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <TrendingUp className="h-5 w-5 text-blue-600" />
+            <span>Fleet Status Summary</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-green-600 mb-1">
+                {fleetStatus.ready || 0}
+              </div>
+              <div className="text-sm text-gray-600">Ready for Service</div>
+              <Badge variant="ready" className="mt-1">Operational</Badge>
             </div>
-            <CheckCircle className="w-8 h-8 text-status-ready" />
+            <div className="text-center">
+              <div className="text-3xl font-bold text-yellow-600 mb-1">
+                {fleetStatus.standby || 0}
+              </div>
+              <div className="text-sm text-gray-600">On Standby</div>
+              <Badge variant="standby" className="mt-1">Backup</Badge>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-600 mb-1">
+                {fleetStatus.maintenance || 0}
+              </div>
+              <div className="text-sm text-gray-600">Under Maintenance</div>
+              <Badge variant="maintenance" className="mt-1">Service</Badge>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-red-600 mb-1">
+                {fleetStatus.critical || 0}
+              </div>
+              <div className="text-sm text-gray-600">Critical Status</div>
+              <Badge variant="critical" className="mt-1">Attention</Badge>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-l-4 border-l-status-standby">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">On Standby</p>
-              <p className="text-2xl font-bold text-status-standby">{standby}</p>
+      {/* Alerts */}
+      {metrics?.alerts && metrics.alerts.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <AlertTriangle className="h-5 w-5 text-red-600" />
+              <span>System Alerts</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {metrics.alerts.slice(0, 5).map((alert: any, index: number) => (
+                <div
+                  key={index}
+                  className={`p-3 rounded-lg border-l-4 ${
+                    alert.type === 'critical' 
+                      ? 'bg-red-50 border-red-500' 
+                      : alert.type === 'warning'
+                      ? 'bg-yellow-50 border-yellow-500'
+                      : 'bg-blue-50 border-blue-500'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-medium text-sm">
+                        {alert.trainset} - {alert.message}
+                      </div>
+                    </div>
+                    <Badge 
+                      variant={alert.priority === 'critical' ? 'critical' : 'default'}
+                      className="text-xs"
+                    >
+                      {alert.priority}
+                    </Badge>
+                  </div>
+                </div>
+              ))}
             </div>
-            <Clock className="w-8 h-8 text-status-standby" />
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-l-4 border-l-status-maintenance">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">In Maintenance</p>
-              <p className="text-2xl font-bold text-status-maintenance">{maintenance}</p>
-            </div>
-            <Wrench className="w-8 h-8 text-status-maintenance" />
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-l-4 border-l-status-critical">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Critical Issues</p>
-              <p className="text-2xl font-bold text-status-critical">{critical}</p>
-            </div>
-            <AlertTriangle className="w-8 h-8 text-status-critical" />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Serviceability */}
-      <Card className="border-l-4 border-l-primary">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <p className="text-sm text-muted-foreground">Fleet Serviceability</p>
-              <p className="text-2xl font-bold text-primary">{serviceability}%</p>
-            </div>
-            <Activity className="w-8 h-8 text-primary" />
-          </div>
-          <Progress value={serviceability} className="h-2" />
-          <p className="text-xs text-muted-foreground mt-1">
-            {serviceableCount} of {totalFleet} trainsets
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* Punctuality KPI */}
-      <Card className="border-l-4 border-l-primary">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <p className="text-sm text-muted-foreground">Punctuality KPI</p>
-              <p className="text-2xl font-bold text-primary">{currentPunctuality}%</p>
-            </div>
-            <Target className="w-8 h-8 text-primary" />
-          </div>
-          <Progress value={(currentPunctuality / targetPunctuality) * 100} className="h-2" />
-          <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>Target: {targetPunctuality}%</span>
-            <Badge variant={currentPunctuality >= targetPunctuality ? "default" : "destructive"} className="text-xs">
-              {currentPunctuality >= targetPunctuality ? (
-                <>
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  On Target
-                </>
-              ) : (
-                <>
-                  <AlertTriangle className="w-3 h-3 mr-1" />
-                  Below Target
-                </>
-              )}
-            </Badge>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
     </div>
-  );
-};
+  )
+}

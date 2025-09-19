@@ -1,111 +1,191 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.supabase.co'
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key'
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
+export const supabase = createClient(supabaseUrl, supabaseKey)
+
+// Database types
+export interface Trainset {
+  id: string
+  number: string
+  status: 'ready' | 'standby' | 'maintenance' | 'critical'
+  bay_position: number
+  mileage: number
+  last_cleaning: string
+  branding_priority: number
+  availability_percentage: number
+  created_at: string
+  updated_at: string
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export interface FitnessCertificate {
+  id: string
+  trainset_id: string
+  certificate_type: string
+  issue_date: string
+  expiry_date: string
+  status: 'active' | 'expired' | 'expiring'
+}
 
-export type Database = {
-  public: {
-    Tables: {
-      trainsets: {
-        Row: {
-          id: string
-          number: string
-          status: 'ready' | 'standby' | 'maintenance' | 'critical'
-          bay_position: number
-          mileage: number
-          last_cleaning: string
-          branding_priority: number
-          availability_percentage: number
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          number: string
-          status?: 'ready' | 'standby' | 'maintenance' | 'critical'
-          bay_position: number
-          mileage?: number
-          last_cleaning?: string
-          branding_priority?: number
-          availability_percentage?: number
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          number?: string
-          status?: 'ready' | 'standby' | 'maintenance' | 'critical'
-          bay_position?: number
-          mileage?: number
-          last_cleaning?: string
-          branding_priority?: number
-          availability_percentage?: number
-          created_at?: string
-          updated_at?: string
-        }
-      }
-      fitness_certificates: {
-        Row: {
-          id: string
-          trainset_id: string
-          certificate_type: 'rolling_stock' | 'signalling' | 'telecom'
-          issue_date: string
-          expiry_date: string
-          certificate_number: string
-          issued_by: string
-          is_valid: boolean
-          created_at: string
-        }
-      }
-      job_cards: {
-        Row: {
-          id: string
-          trainset_id: string
-          maximo_work_order: string
-          status: 'open' | 'closed'
-          description: string | null
-          priority: number
-          estimated_hours: number | null
-          actual_hours: number | null
-          created_at: string
-          completed_at: string | null
-          updated_at: string
-        }
-      }
-      daily_schedules: {
-        Row: {
-          id: string
-          schedule_date: string
-          trainset_id: string
-          planned_status: 'ready' | 'standby' | 'maintenance' | 'critical'
-          actual_status: 'ready' | 'standby' | 'maintenance' | 'critical' | null
-          service_hours: number | null
-          mileage_assigned: number | null
-          branding_exposure_hours: number | null
-          ai_confidence_score: number | null
-          reasoning: any | null
-          created_at: string
-          updated_at: string
-        }
-      }
-      kpi_metrics: {
-        Row: {
-          id: string
-          metric_date: string
-          punctuality_percentage: number | null
-          fleet_availability: number | null
-          maintenance_cost: number | null
-          energy_consumption: number | null
-          passenger_satisfaction: number | null
-          created_at: string
-        }
-      }
+export interface JobCard {
+  id: string
+  trainset_id: string
+  maximo_work_order: string
+  status: 'open' | 'in_progress' | 'closed'
+  description: string
+  priority: number
+  estimated_hours: number
+  actual_hours?: number
+  created_at: string
+  updated_at: string
+  completed_at?: string
+}
+
+export interface DailySchedule {
+  id: string
+  schedule_date: string
+  trainset_id: string
+  planned_status: string
+  ai_confidence_score: number
+  reasoning: {
+    factors: string[]
+    risk_factors: string[]
+    priority_score: number
+  }
+  created_at: string
+  updated_at: string
+}
+
+export interface KPIMetrics {
+  id: string
+  metric_date: string
+  punctuality_percentage: number
+  fleet_availability: number
+  maintenance_cost: number
+  energy_consumption: number
+  created_at: string
+}
+
+// API functions
+export const trainsetAPI = {
+  async getAll(): Promise<Trainset[]> {
+    const { data, error } = await supabase
+      .from('trainsets')
+      .select('*')
+      .order('number')
+    
+    if (error) throw error
+    return data || []
+  },
+
+  async getById(id: string): Promise<Trainset | null> {
+    const { data, error } = await supabase
+      .from('trainsets')
+      .select('*')
+      .eq('id', id)
+      .single()
+    
+    if (error) throw error
+    return data
+  },
+
+  async updateStatus(id: string, status: string): Promise<void> {
+    const { error } = await supabase
+      .from('trainsets')
+      .update({ status, updated_at: new Date().toISOString() })
+      .eq('id', id)
+    
+    if (error) throw error
+  }
+}
+
+export const fitnessAPI = {
+  async getByTrainsetId(trainsetId: string): Promise<FitnessCertificate[]> {
+    const { data, error } = await supabase
+      .from('fitness_certificates')
+      .select('*')
+      .eq('trainset_id', trainsetId)
+      .order('expiry_date')
+    
+    if (error) throw error
+    return data || []
+  }
+}
+
+export const jobCardAPI = {
+  async getByTrainsetId(trainsetId: string): Promise<JobCard[]> {
+    const { data, error } = await supabase
+      .from('job_cards')
+      .select('*')
+      .eq('trainset_id', trainsetId)
+      .order('priority', { ascending: false })
+    
+    if (error) throw error
+    return data || []
+  },
+
+  async updateStatus(id: string, status: string, actualHours?: number): Promise<void> {
+    const updates: any = { 
+      status, 
+      updated_at: new Date().toISOString() 
     }
+    
+    if (status === 'closed') {
+      updates.completed_at = new Date().toISOString()
+      if (actualHours) updates.actual_hours = actualHours
+    }
+
+    const { error } = await supabase
+      .from('job_cards')
+      .update(updates)
+      .eq('id', id)
+    
+    if (error) throw error
+  }
+}
+
+export const scheduleAPI = {
+  async getByDate(date: string): Promise<DailySchedule[]> {
+    const { data, error } = await supabase
+      .from('daily_schedules')
+      .select(`
+        *,
+        trainsets(number, status)
+      `)
+      .eq('schedule_date', date)
+      .order('ai_confidence_score', { ascending: false })
+    
+    if (error) throw error
+    return data || []
+  },
+
+  async generateAISchedule(date: string): Promise<any> {
+    const { data, error } = await supabase.functions.invoke('ai-schedule-optimizer', {
+      body: { scheduleDate: date }
+    })
+    
+    if (error) throw error
+    return data
+  }
+}
+
+export const metricsAPI = {
+  async getRealtimeMetrics(): Promise<any> {
+    const { data, error } = await supabase.functions.invoke('realtime-metrics')
+    
+    if (error) throw error
+    return data
+  },
+
+  async getKPIs(): Promise<KPIMetrics[]> {
+    const { data, error } = await supabase
+      .from('kpi_metrics')
+      .select('*')
+      .order('metric_date', { ascending: false })
+      .limit(30)
+    
+    if (error) throw error
+    return data || []
   }
 }

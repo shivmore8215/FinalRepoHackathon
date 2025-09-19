@@ -1,90 +1,179 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { TrainCard } from "./TrainCard";
-import { AISchedulingPanel } from "./AISchedulingPanel";
-import { SystemMetrics } from "./SystemMetrics";
-import { Clock, Train, AlertTriangle, CheckCircle } from "lucide-react";
-import { useTrainData } from "@/hooks/useTrainData";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { SystemMetrics } from "./SystemMetrics"
+import { TrainCard } from "./TrainCard"
+import { SchedulingPanel } from "./SchedulingPanel"
+import { AISchedulingPanel } from "./AISchedulingPanel"
+import { ReportsPanel } from "./ReportsPanel"
+import { SettingsPanel } from './SettingsPanel-simple'
+import { useTrainsets, useRealtimeMetrics, useDailySchedule, useKPIs } from "@/hooks/useTrainData"
+import { Train, RefreshCw, Settings, BarChart3 } from "lucide-react"
+import { useState } from "react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { useToast } from "@/hooks/use-toast"
 
+export function Dashboard() {
+  const { data: trainsets = [], isLoading: trainsetsLoading, refetch: refetchTrainsets } = useTrainsets()
+  const { data: metrics, isLoading: metricsLoading, refetch: refetchMetrics } = useRealtimeMetrics()
+  const { data: scheduleData = [], refetch: refetchSchedule } = useDailySchedule(new Date().toISOString().split('T')[0])
+  const { data: kpiData = [], refetch: refetchKPIs } = useKPIs()
+  const { toast } = useToast()
+  
+  const [activeTab, setActiveTab] = useState('manual')
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
-export const Dashboard = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const { trainSets, metrics, loading, error } = useTrainData();
+  const readyTrainsets = trainsets.filter(t => t.status === 'ready')
+  const standbyTrainsets = trainsets.filter(t => t.status === 'standby')
+  const maintenanceTrainsets = trainsets.filter(t => t.status === 'maintenance')
+  const criticalTrainsets = trainsets.filter(t => t.status === 'critical')
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const handleRefresh = async () => {
+    setIsRefreshing(true)
+    try {
+      await Promise.all([
+        refetchTrainsets(),
+        refetchMetrics(),
+        refetchSchedule(),
+        refetchKPIs()
+      ])
+      toast({
+        title: "Data Refreshed",
+        description: "All system data has been updated successfully.",
+      })
+    } catch (error) {
+      toast({
+        title: "Refresh Failed",
+        description: "Unable to refresh data. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsRefreshing(false)
+    }
+  }
 
-  const readyCount = metrics?.ready || 0;
-  const standbyCount = metrics?.standby || 0;
-  const maintenanceCount = metrics?.maintenance || 0;
-  const criticalCount = metrics?.critical || 0;
-
-  const isPlanningWindow = currentTime.getHours() >= 21 || currentTime.getHours() <= 23;
+  const handleReportsClick = () => {
+    setActiveTab('reports')
+    toast({
+      title: "Reports Opened",
+      description: "Accessing comprehensive analytics and reporting.",
+    })
+  }
 
   return (
-    <div className="min-h-screen bg-background p-6 space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">KMRL Train Induction Planning</h1>
-          <p className="text-muted-foreground">AI-Driven Scheduling & Fleet Management System</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="text-right">
-            <div className="text-sm text-muted-foreground">Current Time (IST)</div>
-            <div className="text-lg font-mono font-semibold">
-              {currentTime.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })}
+      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-blue-600 rounded-lg">
+                <Train className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">Train Plan Wise</h1>
+                <p className="text-sm text-gray-600">Kochi Metro Rail Limited</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleRefresh}
+                disabled={isRefreshing}
+                className="hover:bg-green-50"
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+                {isRefreshing ? 'Refreshing...' : 'Refresh'}
+              </Button>
+              
+              <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm" className="hover:bg-blue-50">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Settings
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>System Settings</DialogTitle>
+                  </DialogHeader>
+                  <SettingsPanel />
+                </DialogContent>
+              </Dialog>
+              
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={handleReportsClick}
+                className="hover:bg-purple-50"
+              >
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Reports
+              </Button>
             </div>
           </div>
-          {isPlanningWindow && (
-            <Badge variant="destructive" className="animate-pulse">
-              <Clock className="w-4 h-4 mr-1" />
-              Planning Window Active
-            </Badge>
-          )}
         </div>
-      </div>
+      </header>
 
-      {/* System Metrics */}
-      <SystemMetrics 
-        ready={readyCount}
-        standby={standbyCount}
-        maintenance={maintenanceCount}
-        critical={criticalCount}
-        totalFleet={metrics?.totalFleet || 25}
-      />
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* System Metrics */}
+        <div className="mb-8">
+          <SystemMetrics metrics={metrics} isLoading={metricsLoading} />
+        </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-        {/* Fleet Overview */}
-        <div className="xl:col-span-3">
+        {/* Fleet Status Overview */}
+        <div className="mb-8">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Train className="w-5 h-5" />
+              <CardTitle className="flex items-center justify-between">
                 Fleet Status Overview
+                <div className="flex space-x-2">
+                  <Badge variant="ready">{readyTrainsets.length} Ready</Badge>
+                  <Badge variant="standby">{standbyTrainsets.length} Standby</Badge>
+                  <Badge variant="maintenance">{maintenanceTrainsets.length} Maintenance</Badge>
+                  <Badge variant="critical">{criticalTrainsets.length} Critical</Badge>
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-                {trainSets.map((trainSet) => (
-                  <TrainCard key={trainSet.id} trainSet={trainSet} />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {trainsets.map((trainset) => (
+                  <TrainCard key={trainset.id} trainset={trainset} />
                 ))}
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* AI Scheduling Panel */}
-        <div className="xl:col-span-1">
-          <AISchedulingPanel trainSets={trainSets} />
-        </div>
-      </div>
+        {/* Main Panels */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="manual">Manual Scheduling</TabsTrigger>
+            <TabsTrigger value="ai">AI-Powered Scheduling</TabsTrigger>
+            <TabsTrigger value="reports">Reports & Analytics</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="manual">
+            <SchedulingPanel trainsets={trainsets} />
+          </TabsContent>
+          
+          <TabsContent value="ai">
+            <AISchedulingPanel trainsets={trainsets} />
+          </TabsContent>
+          
+          <TabsContent value="reports">
+            <ReportsPanel 
+              trainsets={trainsets}
+              scheduleData={scheduleData}
+              kpiData={kpiData}
+            />
+          </TabsContent>
+        </Tabs>
+      </main>
     </div>
-  );
-};
+  )
+}

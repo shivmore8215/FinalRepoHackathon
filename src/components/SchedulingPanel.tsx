@@ -1,241 +1,191 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { 
-  Brain, 
-  Play, 
-  RefreshCw, 
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  Target,
-  Zap
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-
-interface TrainSet {
-  id: string;
-  number: string;
-  status: "ready" | "standby" | "maintenance" | "critical";
-  fitnessExpiry: Date;
-  jobCardStatus: "open" | "closed";
-  brandingPriority: number;
-  mileage: number;
-  lastCleaning: Date;
-  bayPosition: number;
-  availability: number;
-}
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
+import { Calendar, Clock, Users, MapPin, RefreshCw } from "lucide-react"
+import { useState } from "react"
 
 interface SchedulingPanelProps {
-  trainSets: TrainSet[];
+  trainsets: any[]
 }
 
-interface AIRecommendation {
-  trainId: string;
-  trainNumber: string;
-  recommendation: "service" | "standby" | "maintenance";
-  confidence: number;
-  reasoning: string[];
-  priority: number;
-}
+export function SchedulingPanel({ trainsets }: SchedulingPanelProps) {
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
+  const [schedule, setSchedule] = useState<Record<string, string>>({})
 
-export const SchedulingPanel = ({ trainSets }: SchedulingPanelProps) => {
-  const [isOptimizing, setIsOptimizing] = useState(false);
-  const [recommendations, setRecommendations] = useState<AIRecommendation[]>([]);
+  const handleStatusChange = (trainsetId: string, status: string) => {
+    setSchedule(prev => ({ ...prev, [trainsetId]: status }))
+  }
 
-  // Mock AI optimization
-  const runOptimization = async () => {
-    setIsOptimizing(true);
-    
-    // Simulate AI processing
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    // Generate mock recommendations
-    const mockRecommendations: AIRecommendation[] = trainSets
-      .filter(t => t.status !== "critical")
-      .map((train, index) => ({
-        trainId: train.id,
-        trainNumber: train.number,
-        recommendation: train.status === "maintenance" ? "maintenance" as const : 
-                      train.availability > 95 && train.jobCardStatus === "closed" ? "service" as const : "standby" as const,
-        confidence: Math.floor(Math.random() * 20) + 80,
-        reasoning: generateReasoning(train),
-        priority: index + 1
-      }))
-      .sort((a, b) => b.confidence - a.confidence)
-      .slice(0, 20); // Top 20 recommendations
-    
-    setRecommendations(mockRecommendations);
-    setIsOptimizing(false);
-  };
+  const generateSchedule = () => {
+    // Simple scheduling logic - can be enhanced
+    const newSchedule: Record<string, string> = {}
+    trainsets.forEach((trainset, index) => {
+      if (trainset.availability_percentage >= 95) {
+        newSchedule[trainset.id] = 'ready'
+      } else if (trainset.availability_percentage >= 85) {
+        newSchedule[trainset.id] = 'standby'
+      } else if (trainset.availability_percentage >= 70) {
+        newSchedule[trainset.id] = 'maintenance'
+      } else {
+        newSchedule[trainset.id] = 'critical'
+      }
+    })
+    setSchedule(newSchedule)
+  }
 
-  const generateReasoning = (train: TrainSet): string[] => {
-    const reasons = [];
-    
-    if (train.availability > 95) reasons.push("High availability score");
-    if (train.jobCardStatus === "closed") reasons.push("No pending maintenance");
-    if (train.brandingPriority >= 8) reasons.push("High branding priority");
-    if (train.mileage < 30000) reasons.push("Low mileage accumulation");
-    
-    const daysToExpiry = Math.ceil((train.fitnessExpiry.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-    if (daysToExpiry > 14) reasons.push("Valid fitness certificate");
-    
-    if (reasons.length === 0) reasons.push("Standard operational parameters");
-    
-    return reasons;
-  };
-
-  const readyForService = recommendations.filter(r => r.recommendation === "service").length;
-  const onStandby = recommendations.filter(r => r.recommendation === "standby").length;
-  const inMaintenance = recommendations.filter(r => r.recommendation === "maintenance").length;
+  const statusCounts = Object.values(schedule).reduce((acc, status) => {
+    acc[status] = (acc[status] || 0) + 1
+    return acc
+  }, {} as Record<string, number>)
 
   return (
-    <Card className="h-fit">
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Brain className="w-5 h-5 text-primary" />
-          AI Scheduling Engine
-        </CardTitle>
-      </CardHeader>
-      
-      <CardContent className="space-y-4">
-        {/* Control Panel */}
-        <div className="space-y-3">
-          <Button 
-            onClick={runOptimization} 
-            disabled={isOptimizing}
-            className="w-full"
-            size="sm"
-          >
-            {isOptimizing ? (
-              <>
-                <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                Optimizing...
-              </>
-            ) : (
-              <>
-                <Zap className="w-4 h-4 mr-2" />
-                Generate Schedule
-              </>
-            )}
-          </Button>
-
-          {isOptimizing && (
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>Analyzing constraints...</span>
-                <span>67%</span>
-              </div>
-              <Progress value={67} className="h-1" />
+    <div className="space-y-6">
+      {/* Schedule Header */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Calendar className="h-5 w-5 text-blue-600" />
+              <span>Manual Scheduling</span>
             </div>
-          )}
-        </div>
-
-        {recommendations.length > 0 && (
-          <>
-            <Separator />
-            
-            {/* Summary */}
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold">Optimization Results</h4>
-              <div className="grid grid-cols-3 gap-2 text-xs">
-                <div className="text-center p-2 bg-status-ready/10 rounded">
-                  <div className="font-semibold text-status-ready">{readyForService}</div>
-                  <div className="text-muted-foreground">Service</div>
-                </div>
-                <div className="text-center p-2 bg-status-standby/10 rounded">
-                  <div className="font-semibold text-status-standby">{onStandby}</div>
-                  <div className="text-muted-foreground">Standby</div>
-                </div>
-                <div className="text-center p-2 bg-status-maintenance/10 rounded">
-                  <div className="font-semibold text-status-maintenance">{inMaintenance}</div>
-                  <div className="text-muted-foreground">Maintenance</div>
-                </div>
-              </div>
+            <div className="flex items-center space-x-2">
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="px-3 py-1 border border-gray-300 rounded-md text-sm"
+              />
+              <Button onClick={generateSchedule} size="sm">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Generate
+              </Button>
             </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+            <div className="text-center p-3 bg-green-50 rounded-lg">
+              <div className="text-2xl font-bold text-green-600">
+                {statusCounts.ready || 0}
+              </div>
+              <div className="text-sm text-green-700">Ready</div>
+            </div>
+            <div className="text-center p-3 bg-yellow-50 rounded-lg">
+              <div className="text-2xl font-bold text-yellow-600">
+                {statusCounts.standby || 0}
+              </div>
+              <div className="text-sm text-yellow-700">Standby</div>
+            </div>
+            <div className="text-center p-3 bg-orange-50 rounded-lg">
+              <div className="text-2xl font-bold text-orange-600">
+                {statusCounts.maintenance || 0}
+              </div>
+              <div className="text-sm text-orange-700">Maintenance</div>
+            </div>
+            <div className="text-center p-3 bg-red-50 rounded-lg">
+              <div className="text-2xl font-bold text-red-600">
+                {statusCounts.critical || 0}
+              </div>
+              <div className="text-sm text-red-700">Critical</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-            <Separator />
-
-            {/* Recommendations List */}
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold">Priority Recommendations</h4>
-              <ScrollArea className="h-[400px]">
-                <div className="space-y-2 pr-2">
-                  {recommendations.map((rec, index) => (
-                    <div
-                      key={rec.trainId}
-                      className={cn(
-                        "p-3 rounded-lg border text-xs space-y-2",
-                        rec.recommendation === "service" && "bg-status-ready/5 border-status-ready/20",
-                        rec.recommendation === "standby" && "bg-status-standby/5 border-status-standby/20",
-                        rec.recommendation === "maintenance" && "bg-status-maintenance/5 border-status-maintenance/20"
-                      )}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium">{rec.trainNumber}</span>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="text-xs">
-                            #{rec.priority}
-                          </Badge>
-                          <div className="flex items-center gap-1">
-                            {rec.recommendation === "service" && <CheckCircle className="w-3 h-3 text-status-ready" />}
-                            {rec.recommendation === "standby" && <Clock className="w-3 h-3 text-status-standby" />}
-                            {rec.recommendation === "maintenance" && <AlertTriangle className="w-3 h-3 text-status-maintenance" />}
-                            <span className={cn(
-                              "text-xs font-medium",
-                              rec.recommendation === "service" && "text-status-ready",
-                              rec.recommendation === "standby" && "text-status-standby",
-                              rec.recommendation === "maintenance" && "text-status-maintenance"
-                            )}>
-                              {rec.recommendation.toUpperCase()}
-                            </span>
-                          </div>
+      {/* Trainset List */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <Users className="h-5 w-5 text-blue-600" />
+            <span>Fleet Assignment</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ScrollArea className="h-96">
+            <div className="space-y-3">
+              {trainsets.map((trainset) => {
+                const assignedStatus = schedule[trainset.id] || trainset.status
+                return (
+                  <div key={trainset.id} className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <MapPin className="h-4 w-4 text-blue-600" />
+                      </div>
+                      <div>
+                        <div className="font-medium">{trainset.number}</div>
+                        <div className="text-sm text-gray-500">
+                          Bay {trainset.bay_position} • {trainset.availability_percentage}% available
                         </div>
                       </div>
-
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Confidence</span>
-                        <div className="flex items-center gap-2">
-                          <Progress value={rec.confidence} className="w-12 h-1" />
-                          <span className="text-muted-foreground">{rec.confidence}%</span>
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <span className="text-muted-foreground block">Reasoning:</span>
-                        {rec.reasoning.map((reason, idx) => (
-                          <div key={idx} className="flex items-center gap-1 text-muted-foreground">
-                            <div className="w-1 h-1 bg-primary rounded-full flex-shrink-0" />
-                            <span>{reason}</span>
-                          </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <Badge variant={assignedStatus as any} className="text-xs">
+                        {assignedStatus}
+                      </Badge>
+                      <div className="flex space-x-1">
+                        {['ready', 'standby', 'maintenance', 'critical'].map((status) => (
+                          <Button
+                            key={status}
+                            variant={assignedStatus === status ? "default" : "outline"}
+                            size="sm"
+                            className="text-xs h-7 px-2"
+                            onClick={() => handleStatusChange(trainset.id, status)}
+                          >
+                            {status.charAt(0).toUpperCase()}
+                          </Button>
                         ))}
                       </div>
                     </div>
-                  ))}
-                </div>
-              </ScrollArea>
+                  </div>
+                )
+              })}
             </div>
+          </ScrollArea>
+        </CardContent>
+      </Card>
 
+      {/* Schedule Summary */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <Clock className="h-5 w-5 text-blue-600" />
+            <span>Schedule Summary</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">Service Readiness</span>
+              <div className="flex items-center space-x-2">
+                <Progress 
+                  value={((statusCounts.ready || 0) / trainsets.length) * 100} 
+                  className="w-32 h-2" 
+                />
+                <span className="text-sm font-medium">
+                  {Math.round(((statusCounts.ready || 0) / trainsets.length) * 100)}%
+                </span>
+              </div>
+            </div>
+            
             <Separator />
-
-            <Button size="sm" className="w-full" variant="outline">
-              <Play className="w-4 h-4 mr-2" />
-              Apply Recommendations
-            </Button>
-          </>
-        )}
-
-        {recommendations.length === 0 && !isOptimizing && (
-          <div className="text-center py-8 text-muted-foreground">
-            <Brain className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">Click "Generate Schedule" to run AI optimization</p>
+            
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <div className="text-gray-600 mb-1">Total Fleet</div>
+                <div className="text-2xl font-bold">{trainsets.length}</div>
+              </div>
+              <div>
+                <div className="text-gray-600 mb-1">Scheduled</div>
+                <div className="text-2xl font-bold">{Object.keys(schedule).length}</div>
+              </div>
+            </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-};
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
