@@ -25,7 +25,17 @@
     "energyEfficiency": "ഊർജ്ജ കാര്യക്ഷമത",
     "recentActivity": "സമീപകാല പ്രവർത്തനം",
     "systemMetrics": "സിസ്റ്റം മെട്രിക്സ്",
-    "maintenanceAlerts": "മെയിന്റനൻസ് അലേർട്ടുകൾ"
+    "maintenanceAlerts": "മെയിന്റനൻസ് അലേർട്ടുകൾ",
+    "fleetStatusSummary": "ഫ്ലീറ്റ് നില സംഗ്രഹം",
+    "systemAlerts": "സിസ്റ്റം അലേർട്ടുകൾ",
+    "readyForService": "സേവനത്തിന് തയ്യാർ",
+    "onStandby": "സ്റ്റാൻഡ്ബൈയിൽ",
+    "underMaintenance": "മെയിന്റനൻസിൽ",
+    "criticalStatus": "ഗുരുതരമായ നില",
+    "operational": "പ്രവർത്തനക്ഷമം",
+    "backup": "ബാക്കപ്പ്",
+    "service": "സേവനം",
+    "attention": "ശ്രദ്ധ"
   },
   "scheduling": {
     "title": "ട്രെയിൻ ഷെഡ്യൂളിംഗ്",
@@ -145,7 +155,16 @@
     "account": "അക്കൗണ്ട്",
     "security": "സുരക്ഷ",
     "privacy": "സ്വകാര്യത",
-    "about": "കുറിച്ച്"
+    "about": "കുറിച്ച്",
+    "system": "സിസ്റ്റം",
+    "aiSettings": "AI സെറ്റിംഗുകൾ",
+    "fleet": "ഫ്ലീറ്റ്",
+    "alerts": "അലേർട്ടുകൾ",
+    "database": "ഡാറ്റാബേസ്",
+    "systemConfiguration": "സിസ്റ്റം കോൺഫിഗറേഷൻ",
+    "autoRefresh": "ഓട്ടോ റിഫ്രഷ്",
+    "refreshInterval": "റിഫ്രഷ് ഇടവേള (സെക്കൻഡുകൾ)",
+    "enableNotifications": "അറിയിപ്പുകൾ പ്രാപ്തമാക്കുക"
   },
   "alerts": {
     "highPriority": "ഉയർന്ന മുൻഗണന",

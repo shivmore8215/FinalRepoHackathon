@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Languages, Globe } from 'lucide-react';
+import { Globe } from 'lucide-react';
 
 interface Language {
   code: string;
@@ -57,12 +57,9 @@ export function LanguageSelector() {
         <Button
           variant="outline"
           size="sm"
-          className="flex items-center gap-2 min-w-[120px]"
+          className="flex items-center justify-center w-10 h-10 p-0 rounded-full border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline">{currentLanguage.flag}</span>
-          <span className="hidden md:inline">{currentLanguage.nativeName}</span>
-          <Languages className="h-4 w-4" />
+          <Globe className="h-4 w-4 text-gray-600 dark:text-gray-300" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">

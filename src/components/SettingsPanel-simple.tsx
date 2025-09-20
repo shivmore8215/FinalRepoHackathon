@@ -174,12 +174,12 @@ export function SettingsPanel() {
       {/* Settings Tabs */}
       <Tabs defaultValue="system" className="space-y-6">
         <TabsList className="grid w-full grid-cols-6 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
-          <TabsTrigger value="system" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">System</TabsTrigger>
-          <TabsTrigger value="ai" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">AI Settings</TabsTrigger>
-          <TabsTrigger value="fleet" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">Fleet</TabsTrigger>
-          <TabsTrigger value="alerts" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">Alerts</TabsTrigger>
-          <TabsTrigger value="database" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">Database</TabsTrigger>
-          <TabsTrigger value="security" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">Security</TabsTrigger>
+          <TabsTrigger value="system" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">{t('settings.system')}</TabsTrigger>
+          <TabsTrigger value="ai" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">{t('settings.aiSettings')}</TabsTrigger>
+          <TabsTrigger value="fleet" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">{t('settings.fleet')}</TabsTrigger>
+          <TabsTrigger value="alerts" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">{t('settings.alerts')}</TabsTrigger>
+          <TabsTrigger value="database" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">{t('settings.database')}</TabsTrigger>
+          <TabsTrigger value="security" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-300">{t('settings.security')}</TabsTrigger>
         </TabsList>
 
         {/* System Settings */}
@@ -188,7 +188,7 @@ export function SettingsPanel() {
             <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-b border-gray-200/50 dark:border-gray-700/50">
               <CardTitle className="flex items-center space-x-2">
                 <Monitor className="h-5 w-5 text-green-600 dark:text-green-400" />
-                <span className="bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent font-semibold">System Configuration</span>
+                <span className="bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent font-semibold">{t('settings.systemConfiguration')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -196,13 +196,13 @@ export function SettingsPanel() {
                 <div className="space-y-4">
                   <CheckboxInput
                     id="autoRefresh"
-                    label="Auto Refresh"
+                    label={t('settings.autoRefresh')}
                     checked={settings.autoRefresh}
                     onChange={(checked: boolean) => updateSetting('autoRefresh', checked)}
                   />
                   
                   <div className="space-y-2">
-                    <Label htmlFor="refreshInterval">Refresh Interval (seconds)</Label>
+                    <Label htmlFor="refreshInterval">{t('settings.refreshInterval')}</Label>
                     <Input
                       id="refreshInterval"
                       type="number"
@@ -215,7 +215,7 @@ export function SettingsPanel() {
                   
                   <CheckboxInput
                     id="notifications"
-                    label="Enable Notifications"
+                    label={t('settings.enableNotifications')}
                     checked={settings.enableNotifications}
                     onChange={(checked: boolean) => updateSetting('enableNotifications', checked)}
                   />

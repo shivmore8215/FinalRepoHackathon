@@ -25,7 +25,17 @@
     "energyEfficiency": "Energy Efficiency",
     "recentActivity": "Recent Activity",
     "systemMetrics": "System Metrics",
-    "maintenanceAlerts": "Maintenance Alerts"
+    "maintenanceAlerts": "Maintenance Alerts",
+    "fleetStatusSummary": "Fleet Status Summary",
+    "systemAlerts": "System Alerts",
+    "readyForService": "Ready for Service",
+    "onStandby": "On Standby",
+    "underMaintenance": "Under Maintenance",
+    "criticalStatus": "Critical Status",
+    "operational": "Operational",
+    "backup": "Backup",
+    "service": "Service",
+    "attention": "Attention"
   },
   "scheduling": {
     "title": "Train Scheduling",
@@ -145,7 +155,16 @@
     "account": "Account",
     "security": "Security",
     "privacy": "Privacy",
-    "about": "About"
+    "about": "About",
+    "system": "System",
+    "aiSettings": "AI Settings",
+    "fleet": "Fleet",
+    "alerts": "Alerts",
+    "database": "Database",
+    "systemConfiguration": "System Configuration",
+    "autoRefresh": "Auto Refresh",
+    "refreshInterval": "Refresh Interval (seconds)",
+    "enableNotifications": "Enable Notifications"
   },
   "alerts": {
     "highPriority": "High Priority",

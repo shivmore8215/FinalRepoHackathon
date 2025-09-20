@@ -25,7 +25,17 @@
     "energyEfficiency": "ऊर्जा दक्षता",
     "recentActivity": "हाल की गतिविधि",
     "systemMetrics": "सिस्टम मेट्रिक्स",
-    "maintenanceAlerts": "रखरखाव अलर्ट"
+    "maintenanceAlerts": "रखरखाव अलर्ट",
+    "fleetStatusSummary": "फ्लीट स्थिति सारांश",
+    "systemAlerts": "सिस्टम अलर्ट",
+    "readyForService": "सेवा के लिए तैयार",
+    "onStandby": "स्टैंडबाई पर",
+    "underMaintenance": "रखरखाव में",
+    "criticalStatus": "गंभीर स्थिति",
+    "operational": "परिचालन",
+    "backup": "बैकअप",
+    "service": "सेवा",
+    "attention": "ध्यान"
   },
   "scheduling": {
     "title": "ट्रेन समय सारणी",
@@ -145,7 +155,16 @@
     "account": "खाता",
     "security": "सुरक्षा",
     "privacy": "गोपनीयता",
-    "about": "के बारे में"
+    "about": "के बारे में",
+    "system": "सिस्टम",
+    "aiSettings": "AI सेटिंग्स",
+    "fleet": "फ्लीट",
+    "alerts": "अलर्ट",
+    "database": "डेटाबेस",
+    "systemConfiguration": "सिस्टम कॉन्फ़िगरेशन",
+    "autoRefresh": "ऑटो रिफ्रेश",
+    "refreshInterval": "रिफ्रेश अंतराल (सेकंड)",
+    "enableNotifications": "सूचनाएं सक्षम करें"
   },
   "alerts": {
     "highPriority": "उच्च प्राथमिकता",

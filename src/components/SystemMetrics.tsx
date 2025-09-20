@@ -103,7 +103,7 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
         <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 border-b dark:border-gray-600">
           <CardTitle className="flex items-center space-x-2 text-gray-900 dark:text-white">
             <TrendingUp className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-            <span>Fleet Status Summary</span>
+            <span>{t('dashboard.fleetStatusSummary')}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -112,29 +112,29 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
               <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-1">
                 {fleetStatus.ready || 0}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">Ready for Service</div>
-              <Badge variant="ready" className="mt-1">Operational</Badge>
+              <div className="text-sm text-gray-600 dark:text-gray-300">{t('dashboard.readyForService')}</div>
+              <Badge variant="ready" className="mt-1">{t('dashboard.operational')}</Badge>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mb-1">
                 {fleetStatus.standby || 0}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">On Standby</div>
-              <Badge variant="standby" className="mt-1">Backup</Badge>
+              <div className="text-sm text-gray-600 dark:text-gray-300">{t('dashboard.onStandby')}</div>
+              <Badge variant="standby" className="mt-1">{t('dashboard.backup')}</Badge>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-1">
                 {fleetStatus.maintenance || 0}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">Under Maintenance</div>
-              <Badge variant="maintenance" className="mt-1">Service</Badge>
+              <div className="text-sm text-gray-600 dark:text-gray-300">{t('dashboard.underMaintenance')}</div>
+              <Badge variant="maintenance" className="mt-1">{t('dashboard.service')}</Badge>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-red-600 dark:text-red-400 mb-1">
                 {fleetStatus.critical || 0}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">Critical Status</div>
-              <Badge variant="critical" className="mt-1">Attention</Badge>
+              <div className="text-sm text-gray-600 dark:text-gray-300">{t('dashboard.criticalStatus')}</div>
+              <Badge variant="critical" className="mt-1">{t('dashboard.attention')}</Badge>
             </div>
           </div>
         </CardContent>
@@ -146,7 +146,7 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
           <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 border-b dark:border-gray-600">
             <CardTitle className="flex items-center space-x-2 text-gray-900 dark:text-white">
               <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
-              <span>System Alerts</span>
+              <span>{t('dashboard.systemAlerts')}</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
