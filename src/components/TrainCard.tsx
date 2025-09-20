@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { useUpdateTrainsetStatus } from "@/hooks/useTrainData"
 import { formatDate, getStatusColor } from "@/lib/utils"
-import { Train, Wrench, Calendar, Gauge, Settings } from "lucide-react"
+import { Train, Calendar, Gauge } from "lucide-react"
+import { useTranslation } from 'react-i18next'
 
 interface TrainCardProps {
   trainset: {
@@ -20,36 +21,37 @@ interface TrainCardProps {
 }
 
 export function TrainCard({ trainset }: TrainCardProps) {
+  const { t } = useTranslation()
   const updateStatus = useUpdateTrainsetStatus()
 
-  const handleStatusChange = (newStatus: string) => {
+  const handleStatusChange = (newStatus: 'ready' | 'standby' | 'maintenance' | 'critical') => {
     updateStatus.mutate({ id: trainset.id, status: newStatus })
   }
 
   const statusConfig = {
-    ready: { label: 'Ready', color: 'ready', icon: '✓' },
-    standby: { label: 'Standby', color: 'standby', icon: '⏸' },
-    maintenance: { label: 'Maintenance', color: 'maintenance', icon: '🔧' },
-    critical: { label: 'Critical', color: 'critical', icon: '⚠' }
+    ready: { label: t('status.ready'), color: 'ready', icon: '✓' },
+    standby: { label: t('status.standby'), color: 'standby', icon: '⏸' },
+    maintenance: { label: t('status.maintenance'), color: 'maintenance', icon: '🔧' },
+    critical: { label: t('status.critical'), color: 'critical', icon: '⚠' }
   }
 
   const currentStatus = statusConfig[trainset.status]
 
   return (
-    <Card className="train-card hover:shadow-lg transition-all duration-300">
+    <Card className="train-card bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 hover:scale-[1.02]">
       <CardContent className="p-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Train className="h-4 w-4 text-blue-600" />
+            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 dark:border dark:border-blue-500/30 rounded-lg">
+              <Train className="h-4 w-4 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">{trainset.number}</h3>
-              <p className="text-xs text-gray-500">Bay {trainset.bay_position}</p>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{trainset.number}</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Bay {trainset.bay_position}</p>
             </div>
           </div>
-          <Badge variant={currentStatus.color as any} className="text-xs">
+          <Badge variant={currentStatus.color as any} className="text-xs shadow-sm">
             {currentStatus.icon} {currentStatus.label}
           </Badge>
         </div>
@@ -57,19 +59,19 @@ export function TrainCard({ trainset }: TrainCardProps) {
         {/* Metrics */}
         <div className="space-y-3">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Availability</span>
-            <span className="font-medium">{trainset.availability_percentage}%</span>
+            <span className="text-gray-600 dark:text-gray-300">{t('trainset.availability')}</span>
+            <span className="font-medium text-gray-900 dark:text-white">{trainset.availability_percentage}%</span>
           </div>
           <Progress value={trainset.availability_percentage} className="h-2" />
 
           <div className="grid grid-cols-2 gap-3 text-xs">
             <div className="flex items-center space-x-1">
-              <Gauge className="h-3 w-3 text-gray-400" />
-              <span className="text-gray-600">{trainset.mileage.toLocaleString()} km</span>
+              <Gauge className="h-3 w-3 text-gray-400 dark:text-gray-500" />
+              <span className="text-gray-600 dark:text-gray-300">{trainset.mileage.toLocaleString()} km</span>
             </div>
             <div className="flex items-center space-x-1">
-              <Calendar className="h-3 w-3 text-gray-400" />
-              <span className="text-gray-600">{formatDate(trainset.last_cleaning)}</span>
+              <Calendar className="h-3 w-3 text-gray-400 dark:text-gray-500" />
+              <span className="text-gray-600 dark:text-gray-300">{formatDate(trainset.last_cleaning)}</span>
             </div>
           </div>
 
@@ -88,7 +90,7 @@ export function TrainCard({ trainset }: TrainCardProps) {
                 variant={trainset.status === status ? "default" : "outline"}
                 size="sm"
                 className="flex-1 text-xs h-8"
-                onClick={() => handleStatusChange(status)}
+                onClick={() => handleStatusChange(status as 'ready' | 'standby' | 'maintenance' | 'critical')}
                 disabled={updateStatus.isPending}
               >
                 {config.icon}

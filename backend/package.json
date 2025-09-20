@@ -21,9 +21,12 @@
     "express-validator": "^7.0.1",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
+    "i18next": "^25.5.2",
+    "i18next-browser-languagedetector": "^8.2.0",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^3.0.3",
     "mongoose": "^8.0.3",
+    "react-i18next": "^15.7.3",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

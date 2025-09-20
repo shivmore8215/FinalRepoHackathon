@@ -6,12 +6,14 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { Calendar, Clock, Users, MapPin, RefreshCw } from "lucide-react"
 import { useState } from "react"
+import { useTranslation } from 'react-i18next'
 
 interface SchedulingPanelProps {
   trainsets: any[]
 }
 
 export function SchedulingPanel({ trainsets }: SchedulingPanelProps) {
+  const { t } = useTranslation()
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
   const [schedule, setSchedule] = useState<Record<string, string>>({})
 
@@ -49,7 +51,7 @@ export function SchedulingPanel({ trainsets }: SchedulingPanelProps) {
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Calendar className="h-5 w-5 text-blue-600" />
-              <span>Manual Scheduling</span>
+              <span>{t('scheduling.manualScheduling')}</span>
             </div>
             <div className="flex items-center space-x-2">
               <input
@@ -60,7 +62,7 @@ export function SchedulingPanel({ trainsets }: SchedulingPanelProps) {
               />
               <Button onClick={generateSchedule} size="sm">
                 <RefreshCw className="h-4 w-4 mr-2" />
-                Generate
+                {t('common.refresh')}
               </Button>
             </div>
           </CardTitle>
@@ -71,25 +73,25 @@ export function SchedulingPanel({ trainsets }: SchedulingPanelProps) {
               <div className="text-2xl font-bold text-green-600">
                 {statusCounts.ready || 0}
               </div>
-              <div className="text-sm text-green-700">Ready</div>
+              <div className="text-sm text-green-700">{t('status.ready')}</div>
             </div>
             <div className="text-center p-3 bg-yellow-50 rounded-lg">
               <div className="text-2xl font-bold text-yellow-600">
                 {statusCounts.standby || 0}
               </div>
-              <div className="text-sm text-yellow-700">Standby</div>
+              <div className="text-sm text-yellow-700">{t('status.standby')}</div>
             </div>
             <div className="text-center p-3 bg-orange-50 rounded-lg">
               <div className="text-2xl font-bold text-orange-600">
                 {statusCounts.maintenance || 0}
               </div>
-              <div className="text-sm text-orange-700">Maintenance</div>
+              <div className="text-sm text-orange-700">{t('status.maintenance')}</div>
             </div>
             <div className="text-center p-3 bg-red-50 rounded-lg">
               <div className="text-2xl font-bold text-red-600">
                 {statusCounts.critical || 0}
               </div>
-              <div className="text-sm text-red-700">Critical</div>
+              <div className="text-sm text-red-700">{t('status.critical')}</div>
             </div>
           </div>
         </CardContent>

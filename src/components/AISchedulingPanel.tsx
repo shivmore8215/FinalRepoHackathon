@@ -7,12 +7,14 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { useGenerateAISchedule } from "@/hooks/useTrainData"
 import { useState } from "react"
 import { Brain, Calendar, Zap, TrendingUp, AlertCircle, CheckCircle } from "lucide-react"
+import { useTranslation } from 'react-i18next'
 
 interface AISchedulingPanelProps {
   trainsets: any[]
 }
 
 export function AISchedulingPanel({ trainsets }: AISchedulingPanelProps) {
+  const { t } = useTranslation()
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
   const [aiRecommendations, setAiRecommendations] = useState<any[]>([])
   const [isGenerating, setIsGenerating] = useState(false)
@@ -51,14 +53,14 @@ export function AISchedulingPanel({ trainsets }: AISchedulingPanelProps) {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Brain className="h-5 w-5 text-purple-600" />
-            <span>AI-Powered Scheduling</span>
+            <span>{t('scheduling.aiScheduling')}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-4">
               <div>
-                <label className="text-sm font-medium text-gray-700">Schedule Date</label>
+                <label className="text-sm font-medium text-gray-700">{t('scheduling.currentSchedule')}</label>
                 <input
                   type="date"
                   value={selectedDate}
@@ -74,12 +76,12 @@ export function AISchedulingPanel({ trainsets }: AISchedulingPanelProps) {
                 {isGenerating ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Generating...
+                    {t('aiScheduling.generating')}
                   </>
                 ) : (
                   <>
                     <Zap className="h-4 w-4 mr-2" />
-                    Generate AI Schedule
+                    {t('aiScheduling.optimizeSchedule')}
                   </>
                 )}
               </Button>

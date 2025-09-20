@@ -43,41 +43,41 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
-    --status-ready: 142 76% 36%;
+    --background: 12 10% 7%;
+    --foreground: 60 9% 98%;
+    --card: 12 10% 9%;
+    --card-foreground: 60 9% 98%;
+    --popover: 12 10% 9%;
+    --popover-foreground: 60 9% 98%;
+    --primary: 210 100% 60%;
+    --primary-foreground: 12 10% 7%;
+    --secondary: 24 10% 15%;
+    --secondary-foreground: 60 9% 98%;
+    --muted: 24 10% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 24 10% 15%;
+    --accent-foreground: 60 9% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 60 9% 98%;
+    --border: 24 10% 18%;
+    --input: 24 10% 18%;
+    --ring: 210 100% 60%;
+    --status-ready: 142 84% 47%;
     --status-ready-foreground: 355 100% 97%;
-    --status-standby: 38 92% 50%;
-    --status-standby-foreground: 48 96% 89%;
-    --status-maintenance: 25 95% 53%;
-    --status-maintenance-foreground: 48 96% 89%;
-    --status-critical: 0 84% 60%;
-    --status-critical-foreground: 210 40% 98%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 94.1%;
-    --sidebar-primary-foreground: 240 5.9% 10%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --status-standby: 38 100% 60%;
+    --status-standby-foreground: 12 10% 7%;
+    --status-maintenance: 25 100% 60%;
+    --status-maintenance-foreground: 12 10% 7%;
+    --status-critical: 0 100% 67%;
+    --status-critical-foreground: 60 9% 98%;
+    --sidebar-background: 12 10% 8%;
+    --sidebar-foreground: 60 9% 98%;
+    --sidebar-primary: 210 100% 60%;
+    --sidebar-primary-foreground: 12 10% 7%;
+    --sidebar-accent: 24 10% 16%;
+    --sidebar-accent-foreground: 60 9% 98%;
+    --sidebar-border: 24 10% 18%;
+    --sidebar-ring: 210 100% 60%;
   }
 }
 
@@ -87,5 +87,28 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Enhanced Dark Mode Utilities */
+@layer utilities {
+  .dark-card {
+    @apply dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:border-gray-700 dark:shadow-xl dark:shadow-black/20;
+  }
+  
+  .dark-header {
+    @apply dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:border-gray-700;
+  }
+  
+  .dark-button {
+    @apply dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-700 dark:hover:from-blue-500 dark:hover:to-blue-600 dark:shadow-lg dark:shadow-blue-500/25;
+  }
+  
+  .dark-input {
+    @apply dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500/20;
+  }
+  
+  .glass-dark {
+    @apply dark:bg-gray-900/80 dark:backdrop-blur-sm dark:border-gray-700/50;
   }
 }

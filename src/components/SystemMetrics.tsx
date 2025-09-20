@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Activity, Clock, Wrench, Zap, TrendingUp, AlertTriangle } from "lucide-react"
+import { useTranslation } from 'react-i18next'
 
 interface SystemMetricsProps {
   metrics?: any
@@ -9,17 +10,19 @@ interface SystemMetricsProps {
 }
 
 export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
+  const { t } = useTranslation()
+  
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[...Array(4)].map((_, i) => (
-          <Card key={i} className="animate-pulse">
+          <Card key={i} className="animate-pulse bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700">
             <CardHeader className="pb-2">
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
             </CardHeader>
             <CardContent>
-              <div className="h-8 bg-gray-200 rounded w-1/2 mb-2"></div>
-              <div className="h-2 bg-gray-200 rounded"></div>
+              <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
+              <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
             </CardContent>
           </Card>
         ))}
@@ -33,40 +36,40 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
 
   const metricsData = [
     {
-      title: "Fleet Availability",
+      title: t('dashboard.fleetAvailability'),
       value: `${fleetStatus.serviceability || 0}%`,
       progress: fleetStatus.serviceability || 0,
       icon: Activity,
       color: "text-green-600",
       bgColor: "bg-green-50",
-      description: `${fleetStatus.ready || 0} ready, ${fleetStatus.standby || 0} standby`
+      description: `${fleetStatus.ready || 0} ${t('status.ready').toLowerCase()}, ${fleetStatus.standby || 0} ${t('status.standby').toLowerCase()}`
     },
     {
-      title: "Punctuality",
+      title: t('dashboard.punctuality'),
       value: `${currentKPIs.punctuality || 99.2}%`,
       progress: currentKPIs.punctuality || 99.2,
       icon: Clock,
       color: "text-blue-600",
       bgColor: "bg-blue-50",
-      description: "On-time performance"
+      description: t('reports.servicePerformance')
     },
     {
-      title: "Maintenance Cost",
+      title: t('reports.maintenanceCost'),
       value: `₹${currentKPIs.maintenance_cost || 0}`,
       progress: 75,
       icon: Wrench,
       color: "text-orange-600",
       bgColor: "bg-orange-50",
-      description: "This month"
+      description: t('reports.monthlyReport')
     },
     {
-      title: "Energy Efficiency",
+      title: t('dashboard.energyEfficiency'),
       value: `${currentKPIs.energy_consumption || 0} kWh`,
       progress: 85,
       icon: Zap,
       color: "text-purple-600",
       bgColor: "bg-purple-50",
-      description: "Average consumption"
+      description: t('reports.energyConsumption')
     }
   ]
 
@@ -75,18 +78,18 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
       {/* Main Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {metricsData.map((metric, index) => (
-          <Card key={index} className="metric-card">
+          <Card key={index} className="metric-card bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:shadow-xl dark:hover:shadow-black/10 transition-all duration-200 hover:scale-[1.02]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-300">
                 {metric.title}
               </CardTitle>
-              <metric.icon className={`h-4 w-4 ${metric.color}`} />
+              <metric.icon className={`h-4 w-4 ${metric.color} dark:opacity-80`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900 mb-1">
+              <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
                 {metric.value}
               </div>
-              <div className="text-xs text-gray-500 mb-2">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                 {metric.description}
               </div>
               <Progress value={metric.progress} className="h-2" />
@@ -96,8 +99,8 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
       </div>
 
       {/* Fleet Status Summary */}
-      <Card>
-        <CardHeader>
+      <Card className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-xl dark:shadow-black/10">
+        <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 border-b dark:border-gray-600">
           <CardTitle className="flex items-center space-x-2">
             <TrendingUp className="h-5 w-5 text-blue-600" />
             <span>Fleet Status Summary</span>
