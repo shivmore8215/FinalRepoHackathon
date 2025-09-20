@@ -101,39 +101,39 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
       {/* Fleet Status Summary */}
       <Card className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-xl dark:shadow-black/10">
         <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 border-b dark:border-gray-600">
-          <CardTitle className="flex items-center space-x-2">
-            <TrendingUp className="h-5 w-5 text-blue-600" />
+          <CardTitle className="flex items-center space-x-2 text-gray-900 dark:text-white">
+            <TrendingUp className="h-5 w-5 text-blue-600 dark:text-blue-400" />
             <span>Fleet Status Summary</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-3xl font-bold text-green-600 mb-1">
+              <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-1">
                 {fleetStatus.ready || 0}
               </div>
-              <div className="text-sm text-gray-600">Ready for Service</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Ready for Service</div>
               <Badge variant="ready" className="mt-1">Operational</Badge>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-600 mb-1">
+              <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mb-1">
                 {fleetStatus.standby || 0}
               </div>
-              <div className="text-sm text-gray-600">On Standby</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">On Standby</div>
               <Badge variant="standby" className="mt-1">Backup</Badge>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-orange-600 mb-1">
+              <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-1">
                 {fleetStatus.maintenance || 0}
               </div>
-              <div className="text-sm text-gray-600">Under Maintenance</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Under Maintenance</div>
               <Badge variant="maintenance" className="mt-1">Service</Badge>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-red-600 mb-1">
+              <div className="text-3xl font-bold text-red-600 dark:text-red-400 mb-1">
                 {fleetStatus.critical || 0}
               </div>
-              <div className="text-sm text-gray-600">Critical Status</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Critical Status</div>
               <Badge variant="critical" className="mt-1">Attention</Badge>
             </div>
           </div>
@@ -142,10 +142,10 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
 
       {/* Alerts */}
       {metrics?.alerts && metrics.alerts.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <AlertTriangle className="h-5 w-5 text-red-600" />
+        <Card className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-xl dark:shadow-black/10">
+          <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 border-b dark:border-gray-600">
+            <CardTitle className="flex items-center space-x-2 text-gray-900 dark:text-white">
+              <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
               <span>System Alerts</span>
             </CardTitle>
           </CardHeader>
@@ -154,12 +154,12 @@ export function SystemMetrics({ metrics, isLoading }: SystemMetricsProps) {
               {metrics.alerts.slice(0, 5).map((alert: any, index: number) => (
                 <div
                   key={index}
-                  className={`p-3 rounded-lg border-l-4 ${
+                  className={`p-3 rounded-lg border-l-4 transition-colors duration-200 ${
                     alert.type === 'critical' 
-                      ? 'bg-red-50 border-red-500' 
+                      ? 'bg-red-50 dark:bg-red-950/30 border-red-500 dark:border-red-400 text-red-900 dark:text-red-100' 
                       : alert.type === 'warning'
-                      ? 'bg-yellow-50 border-yellow-500'
-                      : 'bg-blue-50 border-blue-500'
+                      ? 'bg-yellow-50 dark:bg-yellow-950/30 border-yellow-500 dark:border-yellow-400 text-yellow-900 dark:text-yellow-100'
+                      : 'bg-blue-50 dark:bg-blue-950/30 border-blue-500 dark:border-blue-400 text-blue-900 dark:text-blue-100'
                   }`}
                 >
                   <div className="flex items-center justify-between">
