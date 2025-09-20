@@ -2,10 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Calendar } from "@/components/ui/calendar"
 import { useState } from "react"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, PieChart, Pie, Cell, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 import { 
   FileText, 
   Download, 
@@ -18,6 +17,8 @@ import {
   Zap,
   Activity
 } from "lucide-react"
+import { generateSimplePDFReport } from "@/lib/simplePdfGenerator"
+import { saveAs } from 'file-saver'
 
 interface ReportsPanelProps {
   trainsets: any[]
@@ -25,13 +26,44 @@ interface ReportsPanelProps {
   kpiData: any[]
 }
 
-export function ReportsPanel({ trainsets, scheduleData, kpiData }: ReportsPanelProps) {
+interface ReportData {
+  period: string
+  totalTrainsets: number
+  ready?: number
+  standby?: number
+  maintenance?: number
+  critical?: number
+  avgReady?: number
+  avgStandby?: number
+  avgMaintenance?: number
+  avgCritical?: number
+  punctuality?: number
+  avgPunctuality?: number
+  fleetAvailability?: number
+  avgFleetAvailability?: number
+  energyConsumption?: number
+  totalEnergyConsumption?: number
+  maintenanceCost?: number
+  totalMaintenanceCost?: number
+  ridership?: number
+  totalRidership?: number
+  peakHourEfficiency?: number
+  avgPeakEfficiency?: number
+  aiRecommendations?: number
+  totalAiRecommendations?: number
+  completedJobs?: number
+  totalCompletedJobs?: number
+  workingDays?: number
+}
+
+export function ReportsPanel({ trainsets, scheduleData: _, kpiData: __ }: ReportsPanelProps) {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [reportType, setReportType] = useState<'daily' | 'monthly' | 'yearly'>('daily')
   const [isGenerating, setIsGenerating] = useState(false)
+  const [downloadingFormat, setDownloadingFormat] = useState<'pdf' | 'excel' | null>(null)
 
   // Generate mock report data based on trainsets
-  const generateReportData = (type: 'daily' | 'monthly' | 'yearly') => {
+  const generateReportData = (type: 'daily' | 'monthly' | 'yearly'): ReportData => {
     const baseData = {
       daily: {
         period: selectedDate.toDateString(),
@@ -96,20 +128,74 @@ export function ReportsPanel({ trainsets, scheduleData, kpiData }: ReportsPanelP
     setIsGenerating(false)
   }
 
-  const downloadReport = (format: 'pdf' | 'excel') => {
-    const data = generateReportData(reportType)
+  const downloadReport = async (format: 'pdf' | 'excel') => {
+    setDownloadingFormat(format)
     
-    // Create mock download
-    const filename = `KMRL_${reportType}_report_${new Date().toISOString().split('T')[0]}.${format}`
-    
-    // In a real implementation, this would generate and download actual files
-    const element = document.createElement('a')
-    const file = new Blob([JSON.stringify(data, null, 2)], { type: 'text/plain' })
-    element.href = URL.createObjectURL(file)
-    element.download = filename
-    document.body.appendChild(element)
-    element.click()
-    document.body.removeChild(element)
+    try {
+      const metrics = {
+        current_kpis: {
+          fleet_availability: Math.round((trainsets.filter(t => ['ready', 'standby'].includes(t.status)).length / trainsets.length) * 100),
+          punctuality: 99.2,
+          energy_consumption: 8750
+        },
+        alerts: [
+          { trainset: 'KMRL-001', message: 'Scheduled maintenance due', priority: 'Medium' },
+          { trainset: 'KMRL-008', message: 'High mileage alert', priority: 'High' },
+          { trainset: 'KMRL-015', message: 'Performance monitoring required', priority: 'Low' }
+        ]
+      }
+      
+      const filename = `KMRL_${reportType}_report_${new Date().toISOString().split('T')[0]}`
+      
+      if (format === 'pdf') {
+        // Generate PDF using the simple PDF generator
+        const pdfDoc = generateSimplePDFReport(trainsets, metrics)
+        pdfDoc.save(`${filename}.pdf`)
+      } else if (format === 'excel') {
+        // Generate Excel using backend API
+        const response = await fetch('/api/reports/generate-excel', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            trainsets,
+            metrics,
+            reportType
+          })
+        })
+        
+        if (response.ok) {
+          const blob = await response.blob()
+          saveAs(blob, `${filename}.xlsx`)
+        } else {
+          console.error('Failed to generate Excel report')
+          // Fallback: create a simple Excel-like file
+          const reportData = generateReportData(reportType)
+          const csvContent = Object.entries(reportData)
+            .map(([key, value]) => `${key},${value}`)
+            .join('\n')
+          
+          const blob = new Blob([csvContent], { type: 'text/csv' })
+          saveAs(blob, `${filename}.csv`)
+        }
+      }
+    } catch (error) {
+      console.error(`Error generating ${format} report:`, error)
+      
+      // Fallback to basic download
+      const data = generateReportData(reportType)
+      const baseFilename = `KMRL_${reportType}_report_${new Date().toISOString().split('T')[0]}`
+      const element = document.createElement('a')
+      const file = new Blob([JSON.stringify(data, null, 2)], { type: 'text/plain' })
+      element.href = URL.createObjectURL(file)
+      element.download = `${baseFilename}.json`
+      document.body.appendChild(element)
+      element.click()
+      document.body.removeChild(element)
+    } finally {
+      setDownloadingFormat(null)
+    }
   }
 
   const reportData = generateReportData(reportType)
@@ -213,16 +299,26 @@ export function ReportsPanel({ trainsets, scheduleData, kpiData }: ReportsPanelP
               <div className="space-y-2">
                 <Button
                   onClick={() => downloadReport('pdf')}
+                  disabled={downloadingFormat === 'pdf'}
                   className="w-full bg-red-600 hover:bg-red-700"
                 >
-                  <Download className="h-4 w-4 mr-2" />
+                  {downloadingFormat === 'pdf' ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                  ) : (
+                    <Download className="h-4 w-4 mr-2" />
+                  )}
                   Download PDF
                 </Button>
                 <Button
                   onClick={() => downloadReport('excel')}
+                  disabled={downloadingFormat === 'excel'}
                   className="w-full bg-green-600 hover:bg-green-700"
                 >
-                  <Download className="h-4 w-4 mr-2" />
+                  {downloadingFormat === 'excel' ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                  ) : (
+                    <Download className="h-4 w-4 mr-2" />
+                  )}
                   Download Excel
                 </Button>
               </div>
@@ -406,7 +502,7 @@ export function ReportsPanel({ trainsets, scheduleData, kpiData }: ReportsPanelP
                   {reportData.punctuality || reportData.avgPunctuality}%
                 </p>
                 <p className="text-sm text-gray-600">
-                  Target: 99.5% | Status: {(reportData.punctuality || reportData.avgPunctuality) >= 99.5 ? '✅ Achieved' : '⚠️ Needs Improvement'}
+                  Target: 99.5% | Status: {((reportData.punctuality || reportData.avgPunctuality) || 0) >= 99.5 ? '✅ Achieved' : '⚠️ Needs Improvement'}
                 </p>
               </CardContent>
             </Card>
@@ -418,7 +514,7 @@ export function ReportsPanel({ trainsets, scheduleData, kpiData }: ReportsPanelP
                   {reportData.fleetAvailability || reportData.avgFleetAvailability}%
                 </p>
                 <p className="text-sm text-gray-600">
-                  Target: 90% | Status: {(reportData.fleetAvailability || reportData.avgFleetAvailability) >= 90 ? '✅ Achieved' : '⚠️ Below Target'}
+                  Target: 90% | Status: {((reportData.fleetAvailability || reportData.avgFleetAvailability) || 0) >= 90 ? '✅ Achieved' : '⚠️ Below Target'}
                 </p>
               </CardContent>
             </Card>
@@ -427,7 +523,7 @@ export function ReportsPanel({ trainsets, scheduleData, kpiData }: ReportsPanelP
               <CardContent className="p-4 text-center">
                 <h3 className="font-semibold text-lg">AI Optimization</h3>
                 <p className="text-3xl font-bold text-purple-600 my-2">
-                  {Math.round(((reportData.aiRecommendations || reportData.totalAiRecommendations) / (reportData.totalTrainsets * (reportData.workingDays || 1))) * 100)}%
+                  {Math.round((((reportData.aiRecommendations || reportData.totalAiRecommendations) || 0) / (reportData.totalTrainsets * (reportData.workingDays || 1))) * 100)}%
                 </p>
                 <p className="text-sm text-gray-600">
                   Recommendations per trainset per day
@@ -472,7 +568,7 @@ export function ReportsPanel({ trainsets, scheduleData, kpiData }: ReportsPanelP
                   <div className="p-4 bg-blue-50 rounded-lg text-center">
                     <h4 className="font-semibold">Maintenance Cost</h4>
                     <p className="text-xl font-bold text-blue-600">
-                      ₹{((reportData.maintenanceCost || reportData.totalMaintenanceCost) / 100000).toFixed(1)}L
+                      ₹{(((reportData.maintenanceCost || reportData.totalMaintenanceCost) || 0) / 100000).toFixed(1)}L
                     </p>
                     <p className="text-sm text-gray-600">Total Spent</p>
                   </div>
@@ -501,7 +597,7 @@ export function ReportsPanel({ trainsets, scheduleData, kpiData }: ReportsPanelP
                   <div className="flex justify-between items-center">
                     <span>Cost per Trainset</span>
                     <Badge className="bg-purple-100 text-purple-800">
-                      ₹{Math.round((reportData.maintenanceCost || reportData.totalMaintenanceCost) / reportData.totalTrainsets).toLocaleString()}
+                      ₹{Math.round(((reportData.maintenanceCost || reportData.totalMaintenanceCost) || 0) / reportData.totalTrainsets).toLocaleString()}
                     </Badge>
                   </div>
                 </div>

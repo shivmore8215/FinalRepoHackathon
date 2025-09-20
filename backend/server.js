@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import connectDB from './config/database.js';
 import authRoutes from './routes/auth.js';
 import dataRoutes from './routes/data.js';
+import reportsRoutes from './routes/reports.js';
 
 // Load environment variables
 dotenv.config();
@@ -83,6 +84,7 @@ app.get('/health', (req, res) => {
 // API Routes
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/data', dataRoutes);
+app.use('/api/reports', reportsRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -93,7 +95,8 @@ app.get('/', (req, res) => {
     endpoints: {
       health: '/health',
       auth: '/api/auth/*',
-      data: '/api/data/*'
+      data: '/api/data/*',
+      reports: '/api/reports/*'
     }
   });
 });
