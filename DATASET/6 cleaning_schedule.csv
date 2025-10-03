@@ -1,0 +1,201 @@
+cleaning_id,trainset_id,scheduled_date_time,cleaning_type,status,bay_number,staff_assigned,remarks
+1,68,28-09-2025,fumigation,in-progress,13,Staff3,Delayed
+2,28,25-09-2025,fumigation,in-progress,10,Staff2,Rescheduled
+3,53,15-10-2025,fumigation,scheduled,2,Staff2,Delayed
+4,51,14-10-2025,deep_cleaning,completed,6,Staff1,On Time
+5,53,20-10-2025,deep_cleaning,in-progress,8,Staff1,Delayed
+6,4,02-10-2025,detailing,completed,4,Staff1,Delayed
+7,79,17-10-2025,detailing,scheduled,12,Staff1,On Time
+8,17,30-09-2025,detailing,completed,15,Staff1,Rescheduled
+9,67,04-10-2025,detailing,scheduled,8,Staff1,Rescheduled
+10,74,12-10-2025,trip_cleaning,scheduled,7,Staff2,On Time
+11,47,25-09-2025,fumigation,scheduled,14,Staff2,Delayed
+12,56,12-10-2025,trip_cleaning,scheduled,19,Staff2,Delayed
+13,23,08-10-2025,trip_cleaning,completed,14,Staff3,Delayed
+14,18,27-09-2025,trip_cleaning,scheduled,13,Staff3,Rescheduled
+15,1,02-10-2025,trip_cleaning,scheduled,1,Staff1,Delayed
+16,35,21-10-2025,fumigation,completed,19,Staff2,Rescheduled
+17,64,24-10-2025,trip_cleaning,in-progress,1,Staff3,Delayed
+18,58,28-09-2025,detailing,completed,4,Staff3,On Time
+19,95,09-10-2025,deep_cleaning,completed,10,Staff2,On Time
+20,59,25-10-2025,detailing,completed,3,Staff3,Rescheduled
+21,1,28-09-2025,deep_cleaning,scheduled,9,Staff3,Rescheduled
+22,3,15-10-2025,detailing,scheduled,3,Staff2,On Time
+23,67,21-10-2025,detailing,scheduled,6,Staff3,On Time
+24,37,29-09-2025,deep_cleaning,in-progress,6,Staff2,Delayed
+25,83,10-10-2025,fumigation,scheduled,12,Staff3,On Time
+26,29,24-10-2025,trip_cleaning,in-progress,1,Staff2,Rescheduled
+27,89,17-10-2025,detailing,scheduled,16,Staff3,On Time
+28,33,04-10-2025,fumigation,completed,5,Staff3,Rescheduled
+29,100,11-10-2025,trip_cleaning,scheduled,9,Staff2,Rescheduled
+30,61,17-10-2025,fumigation,in-progress,10,Staff3,Delayed
+31,93,03-10-2025,fumigation,in-progress,13,Staff2,Delayed
+32,90,08-10-2025,trip_cleaning,scheduled,15,Staff2,Delayed
+33,4,21-10-2025,detailing,completed,12,Staff3,Delayed
+34,14,10-10-2025,fumigation,scheduled,5,Staff1,On Time
+35,91,10-10-2025,detailing,scheduled,5,Staff3,Delayed
+36,33,02-10-2025,detailing,scheduled,18,Staff1,On Time
+37,22,09-10-2025,detailing,completed,12,Staff1,Delayed
+38,48,12-10-2025,trip_cleaning,in-progress,3,Staff3,Delayed
+39,3,29-09-2025,deep_cleaning,completed,7,Staff1,Rescheduled
+40,87,07-10-2025,detailing,in-progress,17,Staff2,On Time
+41,85,01-10-2025,deep_cleaning,in-progress,19,Staff2,Rescheduled
+42,23,24-10-2025,deep_cleaning,in-progress,18,Staff1,Delayed
+43,68,14-10-2025,fumigation,completed,1,Staff2,On Time
+44,21,11-10-2025,detailing,scheduled,5,Staff3,Delayed
+45,43,18-10-2025,detailing,scheduled,2,Staff2,Rescheduled
+46,95,23-10-2025,detailing,scheduled,1,Staff1,On Time
+47,85,29-09-2025,deep_cleaning,scheduled,7,Staff3,Rescheduled
+48,26,22-10-2025,trip_cleaning,scheduled,11,Staff2,Delayed
+49,41,27-09-2025,deep_cleaning,completed,11,Staff3,Delayed
+50,99,03-10-2025,detailing,completed,18,Staff1,Delayed
+51,38,19-10-2025,detailing,completed,17,Staff2,On Time
+52,88,20-10-2025,detailing,completed,2,Staff3,Rescheduled
+53,11,22-10-2025,deep_cleaning,completed,7,Staff3,Rescheduled
+54,29,08-10-2025,detailing,completed,7,Staff2,Delayed
+55,60,05-10-2025,fumigation,completed,10,Staff3,Rescheduled
+56,67,24-10-2025,detailing,scheduled,3,Staff3,On Time
+57,65,20-10-2025,trip_cleaning,in-progress,12,Staff1,Delayed
+58,61,11-10-2025,fumigation,completed,3,Staff1,Delayed
+59,19,03-10-2025,detailing,in-progress,11,Staff1,Delayed
+60,46,21-10-2025,fumigation,completed,12,Staff1,On Time
+61,49,25-09-2025,detailing,completed,4,Staff1,Delayed
+62,22,04-10-2025,trip_cleaning,scheduled,16,Staff1,Delayed
+63,78,18-10-2025,detailing,in-progress,18,Staff2,Delayed
+64,57,04-10-2025,fumigation,scheduled,4,Staff1,Delayed
+65,14,21-10-2025,trip_cleaning,scheduled,6,Staff3,Rescheduled
+66,44,13-10-2025,deep_cleaning,in-progress,15,Staff2,Delayed
+67,16,13-10-2025,trip_cleaning,scheduled,1,Staff3,On Time
+68,97,16-10-2025,trip_cleaning,completed,3,Staff1,Delayed
+69,77,10-10-2025,trip_cleaning,completed,5,Staff1,Delayed
+70,12,22-10-2025,fumigation,completed,17,Staff3,Rescheduled
+71,55,29-09-2025,trip_cleaning,completed,14,Staff3,Delayed
+72,51,09-10-2025,detailing,completed,9,Staff3,Rescheduled
+73,39,12-10-2025,trip_cleaning,scheduled,3,Staff2,On Time
+74,33,10-10-2025,trip_cleaning,scheduled,13,Staff1,Rescheduled
+75,33,06-10-2025,detailing,completed,3,Staff3,Delayed
+76,29,05-10-2025,detailing,completed,11,Staff1,On Time
+77,69,12-10-2025,deep_cleaning,scheduled,2,Staff3,Delayed
+78,70,19-10-2025,trip_cleaning,in-progress,15,Staff1,Rescheduled
+79,31,12-10-2025,fumigation,scheduled,13,Staff2,On Time
+80,80,07-10-2025,trip_cleaning,scheduled,19,Staff1,On Time
+81,31,09-10-2025,trip_cleaning,scheduled,16,Staff3,Rescheduled
+82,89,24-10-2025,detailing,scheduled,18,Staff1,Rescheduled
+83,46,05-10-2025,deep_cleaning,scheduled,7,Staff2,On Time
+84,97,22-10-2025,trip_cleaning,in-progress,13,Staff2,On Time
+85,77,01-10-2025,fumigation,completed,4,Staff1,Rescheduled
+86,52,17-10-2025,trip_cleaning,completed,9,Staff3,Delayed
+87,10,02-10-2025,fumigation,in-progress,10,Staff2,On Time
+88,88,13-10-2025,detailing,completed,9,Staff2,Rescheduled
+89,74,07-10-2025,deep_cleaning,completed,7,Staff1,Delayed
+90,41,02-10-2025,trip_cleaning,completed,15,Staff2,On Time
+91,95,22-10-2025,deep_cleaning,in-progress,8,Staff2,On Time
+92,77,19-10-2025,trip_cleaning,in-progress,19,Staff3,Rescheduled
+93,3,08-10-2025,fumigation,completed,11,Staff3,Delayed
+94,59,26-09-2025,deep_cleaning,completed,5,Staff3,On Time
+95,52,05-10-2025,trip_cleaning,completed,2,Staff1,Delayed
+96,34,18-10-2025,detailing,scheduled,10,Staff2,Delayed
+97,49,10-10-2025,fumigation,scheduled,16,Staff1,On Time
+98,28,17-10-2025,deep_cleaning,scheduled,13,Staff2,Delayed
+99,83,24-10-2025,trip_cleaning,in-progress,8,Staff2,On Time
+100,87,20-10-2025,deep_cleaning,completed,9,Staff2,Delayed
+101,96,07-10-2025,trip_cleaning,in-progress,11,Staff3,On Time
+102,13,07-10-2025,fumigation,in-progress,11,Staff1,Rescheduled
+103,97,16-10-2025,detailing,in-progress,16,Staff1,On Time
+104,98,20-10-2025,fumigation,completed,10,Staff2,On Time
+105,97,21-10-2025,deep_cleaning,scheduled,12,Staff1,On Time
+106,69,15-10-2025,deep_cleaning,completed,6,Staff3,Delayed
+107,67,29-09-2025,trip_cleaning,completed,12,Staff1,Rescheduled
+108,61,10-10-2025,fumigation,in-progress,10,Staff2,Delayed
+109,60,25-10-2025,trip_cleaning,in-progress,18,Staff3,Delayed
+110,71,26-09-2025,fumigation,in-progress,18,Staff3,On Time
+111,24,29-09-2025,deep_cleaning,scheduled,4,Staff2,Delayed
+112,63,11-10-2025,trip_cleaning,scheduled,9,Staff1,On Time
+113,86,25-10-2025,trip_cleaning,scheduled,7,Staff2,Rescheduled
+114,61,13-10-2025,fumigation,completed,18,Staff1,Delayed
+115,23,05-10-2025,detailing,in-progress,8,Staff1,Delayed
+116,30,22-10-2025,fumigation,completed,11,Staff3,Delayed
+117,60,28-09-2025,detailing,scheduled,7,Staff2,On Time
+118,18,22-10-2025,fumigation,in-progress,9,Staff3,On Time
+119,96,22-10-2025,deep_cleaning,scheduled,8,Staff2,Delayed
+120,56,09-10-2025,trip_cleaning,in-progress,3,Staff2,Delayed
+121,53,28-09-2025,fumigation,in-progress,17,Staff3,Rescheduled
+122,7,11-10-2025,deep_cleaning,completed,2,Staff2,Rescheduled
+123,97,24-10-2025,fumigation,completed,15,Staff2,Rescheduled
+124,69,09-10-2025,trip_cleaning,scheduled,14,Staff1,Rescheduled
+125,92,25-09-2025,fumigation,completed,18,Staff2,Rescheduled
+126,72,18-10-2025,detailing,completed,16,Staff2,On Time
+127,79,29-09-2025,trip_cleaning,completed,4,Staff3,Rescheduled
+128,52,08-10-2025,detailing,in-progress,6,Staff3,Rescheduled
+129,4,22-10-2025,deep_cleaning,completed,6,Staff2,Delayed
+130,34,15-10-2025,deep_cleaning,scheduled,11,Staff1,On Time
+131,69,29-09-2025,fumigation,in-progress,17,Staff1,Rescheduled
+132,33,27-09-2025,detailing,in-progress,3,Staff3,Rescheduled
+133,69,10-10-2025,detailing,completed,13,Staff2,Rescheduled
+134,38,20-10-2025,trip_cleaning,in-progress,3,Staff2,Delayed
+135,98,03-10-2025,detailing,scheduled,16,Staff1,Delayed
+136,26,05-10-2025,detailing,scheduled,15,Staff1,Delayed
+137,1,14-10-2025,trip_cleaning,in-progress,11,Staff1,Rescheduled
+138,4,17-10-2025,trip_cleaning,completed,18,Staff3,Delayed
+139,39,07-10-2025,detailing,completed,15,Staff2,Rescheduled
+140,54,15-10-2025,fumigation,in-progress,5,Staff3,On Time
+141,90,27-09-2025,trip_cleaning,scheduled,16,Staff2,Rescheduled
+142,33,22-10-2025,trip_cleaning,in-progress,16,Staff3,Delayed
+143,33,05-10-2025,detailing,completed,17,Staff2,On Time
+144,72,22-10-2025,detailing,completed,9,Staff1,Rescheduled
+145,20,16-10-2025,trip_cleaning,in-progress,3,Staff1,On Time
+146,16,22-10-2025,detailing,scheduled,13,Staff1,On Time
+147,21,12-10-2025,trip_cleaning,in-progress,3,Staff3,On Time
+148,45,07-10-2025,fumigation,scheduled,7,Staff1,Rescheduled
+149,90,25-10-2025,fumigation,scheduled,6,Staff2,Delayed
+150,87,05-10-2025,trip_cleaning,in-progress,9,Staff3,Rescheduled
+151,82,15-10-2025,trip_cleaning,in-progress,12,Staff2,Delayed
+152,62,17-10-2025,deep_cleaning,scheduled,15,Staff3,Rescheduled
+153,31,23-10-2025,deep_cleaning,scheduled,3,Staff2,Rescheduled
+154,42,19-10-2025,detailing,scheduled,10,Staff2,Rescheduled
+155,12,10-10-2025,detailing,scheduled,1,Staff3,Delayed
+156,65,22-10-2025,trip_cleaning,completed,19,Staff3,Rescheduled
+157,73,12-10-2025,trip_cleaning,in-progress,19,Staff1,On Time
+158,3,26-09-2025,deep_cleaning,scheduled,13,Staff1,Rescheduled
+159,90,14-10-2025,deep_cleaning,in-progress,12,Staff2,On Time
+160,9,27-09-2025,trip_cleaning,scheduled,1,Staff2,Delayed
+161,51,02-10-2025,fumigation,in-progress,19,Staff2,Delayed
+162,16,15-10-2025,fumigation,in-progress,16,Staff3,Rescheduled
+163,88,16-10-2025,detailing,scheduled,15,Staff3,Rescheduled
+164,78,24-10-2025,trip_cleaning,scheduled,16,Staff1,Rescheduled
+165,3,04-10-2025,trip_cleaning,in-progress,11,Staff2,On Time
+166,98,02-10-2025,detailing,in-progress,6,Staff1,Delayed
+167,97,18-10-2025,deep_cleaning,in-progress,11,Staff3,On Time
+168,24,27-09-2025,deep_cleaning,completed,3,Staff3,On Time
+169,73,08-10-2025,fumigation,scheduled,15,Staff3,Rescheduled
+170,13,28-09-2025,trip_cleaning,completed,1,Staff1,Rescheduled
+171,2,19-10-2025,deep_cleaning,completed,7,Staff3,On Time
+172,71,15-10-2025,fumigation,scheduled,1,Staff2,On Time
+173,21,17-10-2025,fumigation,scheduled,17,Staff1,Rescheduled
+174,19,22-10-2025,fumigation,completed,9,Staff3,Rescheduled
+175,89,28-09-2025,deep_cleaning,scheduled,13,Staff1,On Time
+176,47,09-10-2025,deep_cleaning,in-progress,11,Staff1,Rescheduled
+177,22,30-09-2025,trip_cleaning,in-progress,6,Staff3,Rescheduled
+178,75,17-10-2025,trip_cleaning,completed,1,Staff3,On Time
+179,33,04-10-2025,fumigation,completed,7,Staff1,On Time
+180,32,23-10-2025,fumigation,scheduled,12,Staff1,Delayed
+181,64,25-09-2025,deep_cleaning,scheduled,19,Staff3,On Time
+182,85,26-09-2025,deep_cleaning,completed,17,Staff2,Rescheduled
+183,39,05-10-2025,trip_cleaning,completed,4,Staff1,On Time
+184,84,20-10-2025,trip_cleaning,in-progress,3,Staff1,On Time
+185,72,26-09-2025,detailing,in-progress,1,Staff2,On Time
+186,42,04-10-2025,trip_cleaning,scheduled,18,Staff3,Delayed
+187,9,06-10-2025,deep_cleaning,in-progress,15,Staff3,Delayed
+188,25,06-10-2025,fumigation,scheduled,8,Staff2,Rescheduled
+189,89,08-10-2025,detailing,scheduled,1,Staff3,Delayed
+190,97,29-09-2025,trip_cleaning,scheduled,14,Staff3,On Time
+191,2,02-10-2025,trip_cleaning,in-progress,4,Staff1,Delayed
+192,19,11-10-2025,deep_cleaning,completed,5,Staff1,On Time
+193,20,08-10-2025,detailing,completed,13,Staff1,Delayed
+194,93,13-10-2025,trip_cleaning,in-progress,15,Staff2,Delayed
+195,70,16-10-2025,fumigation,completed,6,Staff3,Delayed
+196,17,20-10-2025,deep_cleaning,scheduled,1,Staff3,On Time
+197,89,30-09-2025,detailing,completed,19,Staff1,Delayed
+198,68,30-09-2025,trip_cleaning,in-progress,13,Staff1,On Time
+199,94,30-09-2025,trip_cleaning,completed,6,Staff2,On Time
+200,84,27-09-2025,detailing,scheduled,15,Staff3,Rescheduled

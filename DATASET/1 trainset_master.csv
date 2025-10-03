@@ -1,0 +1,101 @@
+trainset_id,rake_number,make_model,year_commissioned,current_status,home_depot
+1,R1000,Hyundai Rotem,2019,in_service,Depot B
+2,R1001,Alstom,2017,standby,Depot A
+3,R1002,Alstom,2016,standby,Depot B
+4,R1003,BEML,2022,IBL_maintenance,Depot B
+5,R1004,BEML,2017,in_service,Depot B
+6,R1005,BEML,2016,standby,Depot A
+7,R1006,BEML,2016,standby,Depot A
+8,R1007,Alstom,2021,standby,Depot A
+9,R1008,BEML,2018,in_service,Depot A
+10,R1009,BEML,2016,IBL_maintenance,Depot A
+11,R1010,Hyundai Rotem,2017,standby,Depot B
+12,R1011,BEML,2018,in_service,Depot B
+13,R1012,BEML,2018,standby,Depot B
+14,R1013,BEML,2016,standby,Depot B
+15,R1014,Alstom,2019,IBL_maintenance,Depot B
+16,R1015,Hyundai Rotem,2019,standby,Depot B
+17,R1016,BEML,2020,standby,Depot B
+18,R1017,BEML,2018,in_service,Depot A
+19,R1018,Hyundai Rotem,2016,in_service,Depot B
+20,R1019,BEML,2021,IBL_maintenance,Depot A
+21,R1020,Alstom,2019,in_service,Depot B
+22,R1021,BEML,2021,in_service,Depot B
+23,R1022,Alstom,2016,IBL_maintenance,Depot A
+24,R1023,Alstom,2016,standby,Depot B
+25,R1024,BEML,2022,IBL_maintenance,Depot A
+26,R1025,Hyundai Rotem,2018,in_service,Depot B
+27,R1026,Alstom,2022,IBL_maintenance,Depot A
+28,R1027,Hyundai Rotem,2021,standby,Depot B
+29,R1028,BEML,2022,IBL_maintenance,Depot A
+30,R1029,Alstom,2020,in_service,Depot A
+31,R1030,BEML,2018,in_service,Depot B
+32,R1031,Hyundai Rotem,2015,IBL_maintenance,Depot B
+33,R1032,BEML,2022,standby,Depot A
+34,R1033,BEML,2021,IBL_maintenance,Depot B
+35,R1034,Alstom,2019,standby,Depot A
+36,R1035,BEML,2019,standby,Depot B
+37,R1036,BEML,2019,IBL_maintenance,Depot A
+38,R1037,BEML,2017,standby,Depot B
+39,R1038,Alstom,2016,in_service,Depot A
+40,R1039,Hyundai Rotem,2018,IBL_maintenance,Depot B
+41,R1040,Hyundai Rotem,2019,standby,Depot A
+42,R1041,BEML,2015,in_service,Depot A
+43,R1042,Alstom,2019,IBL_maintenance,Depot B
+44,R1043,BEML,2020,in_service,Depot B
+45,R1044,Hyundai Rotem,2016,in_service,Depot A
+46,R1045,Alstom,2021,in_service,Depot A
+47,R1046,Hyundai Rotem,2016,standby,Depot A
+48,R1047,Hyundai Rotem,2022,IBL_maintenance,Depot A
+49,R1048,Alstom,2021,IBL_maintenance,Depot B
+50,R1049,Alstom,2021,standby,Depot A
+51,R1050,BEML,2022,IBL_maintenance,Depot A
+52,R1051,BEML,2018,in_service,Depot A
+53,R1052,Hyundai Rotem,2022,IBL_maintenance,Depot B
+54,R1053,Alstom,2017,standby,Depot A
+55,R1054,Alstom,2021,in_service,Depot B
+56,R1055,BEML,2021,standby,Depot B
+57,R1056,Hyundai Rotem,2022,in_service,Depot B
+58,R1057,Hyundai Rotem,2018,in_service,Depot B
+59,R1058,BEML,2019,IBL_maintenance,Depot B
+60,R1059,Alstom,2020,in_service,Depot B
+61,R1060,BEML,2015,standby,Depot B
+62,R1061,BEML,2018,IBL_maintenance,Depot A
+63,R1062,BEML,2017,standby,Depot A
+64,R1063,BEML,2018,in_service,Depot B
+65,R1064,Alstom,2016,standby,Depot A
+66,R1065,BEML,2019,standby,Depot A
+67,R1066,Alstom,2019,in_service,Depot B
+68,R1067,BEML,2021,IBL_maintenance,Depot A
+69,R1068,Hyundai Rotem,2019,standby,Depot B
+70,R1069,Alstom,2019,in_service,Depot A
+71,R1070,Hyundai Rotem,2022,IBL_maintenance,Depot B
+72,R1071,BEML,2019,IBL_maintenance,Depot B
+73,R1072,BEML,2019,IBL_maintenance,Depot A
+74,R1073,BEML,2015,standby,Depot A
+75,R1074,Alstom,2017,standby,Depot B
+76,R1075,Hyundai Rotem,2021,standby,Depot B
+77,R1076,Alstom,2022,IBL_maintenance,Depot B
+78,R1077,Alstom,2019,standby,Depot A
+79,R1078,BEML,2021,in_service,Depot A
+80,R1079,Hyundai Rotem,2017,standby,Depot A
+81,R1080,BEML,2022,standby,Depot A
+82,R1081,Alstom,2020,IBL_maintenance,Depot B
+83,R1082,BEML,2019,standby,Depot B
+84,R1083,Hyundai Rotem,2021,in_service,Depot B
+85,R1084,BEML,2018,IBL_maintenance,Depot B
+86,R1085,Hyundai Rotem,2022,in_service,Depot A
+87,R1086,Hyundai Rotem,2022,IBL_maintenance,Depot B
+88,R1087,BEML,2021,IBL_maintenance,Depot B
+89,R1088,Alstom,2019,standby,Depot A
+90,R1089,BEML,2016,in_service,Depot A
+91,R1090,Alstom,2015,IBL_maintenance,Depot B
+92,R1091,Alstom,2018,standby,Depot A
+93,R1092,BEML,2018,IBL_maintenance,Depot B
+94,R1093,Alstom,2016,IBL_maintenance,Depot A
+95,R1094,Alstom,2019,IBL_maintenance,Depot A
+96,R1095,BEML,2022,IBL_maintenance,Depot B
+97,R1096,BEML,2022,IBL_maintenance,Depot A
+98,R1097,BEML,2015,IBL_maintenance,Depot B
+99,R1098,Alstom,2018,standby,Depot A
+100,R1099,Hyundai Rotem,2015,IBL_maintenance,Depot A

@@ -1,0 +1,201 @@
+jobcard_id,trainset_id,fault_category,description,status,priority,created_on,expected_completion_date,responsible_team
+1,18,doors,Replacement,closed,medium,25-09-2025,05-10-2025,Team A
+2,30,telecom,Repair,in-progress,high,28-08-2025,28-09-2025,Team C
+3,26,signalling,Replacement,open,emergency,01-09-2025,29-09-2025,Team C
+4,16,bogie,Replacement,open,emergency,29-08-2025,28-09-2025,Team B
+5,77,telecom,Replacement,in-progress,low,01-09-2025,03-10-2025,Team A
+6,39,signalling,Replacement,open,medium,28-08-2025,06-10-2025,Team C
+7,33,brake system,Replacement,in-progress,emergency,22-09-2025,27-09-2025,Team C
+8,26,telecom,Repair,open,medium,01-09-2025,05-10-2025,Team C
+9,48,HVAC,Inspection,closed,medium,12-09-2025,29-09-2025,Team B
+10,65,doors,Repair,closed,medium,18-09-2025,03-10-2025,Team B
+11,38,signalling,Repair,closed,medium,20-09-2025,07-10-2025,Team C
+12,2,doors,Repair,closed,medium,31-08-2025,30-09-2025,Team C
+13,6,signalling,Testing,closed,high,26-08-2025,08-10-2025,Team A
+14,46,telecom,Testing,in-progress,low,03-09-2025,01-10-2025,Team A
+15,50,brake system,Repair,closed,medium,09-09-2025,28-09-2025,Team A
+16,38,bogie,Inspection,closed,high,11-09-2025,05-10-2025,Team B
+17,88,doors,Repair,closed,emergency,24-09-2025,05-10-2025,Team C
+18,18,doors,Replacement,closed,medium,08-09-2025,07-10-2025,Team B
+19,27,bogie,Testing,open,emergency,18-09-2025,07-10-2025,Team C
+20,41,doors,Testing,closed,medium,27-08-2025,27-09-2025,Team A
+21,72,doors,Repair,closed,high,29-08-2025,08-10-2025,Team A
+22,92,signalling,Repair,in-progress,high,22-09-2025,09-10-2025,Team A
+23,74,signalling,Inspection,open,high,11-09-2025,28-09-2025,Team A
+24,17,bogie,Inspection,in-progress,low,21-09-2025,30-09-2025,Team C
+25,62,brake system,Replacement,closed,emergency,31-08-2025,27-09-2025,Team A
+26,29,telecom,Repair,in-progress,low,11-09-2025,05-10-2025,Team C
+27,58,telecom,Repair,in-progress,medium,04-09-2025,26-09-2025,Team C
+28,70,doors,Repair,closed,emergency,09-09-2025,10-10-2025,Team B
+29,78,brake system,Testing,open,high,08-09-2025,30-09-2025,Team A
+30,22,bogie,Replacement,open,emergency,06-09-2025,05-10-2025,Team A
+31,6,bogie,Inspection,in-progress,high,15-09-2025,06-10-2025,Team B
+32,26,signalling,Testing,closed,low,26-08-2025,10-10-2025,Team C
+33,39,doors,Testing,in-progress,low,01-09-2025,02-10-2025,Team A
+34,12,HVAC,Testing,in-progress,high,28-08-2025,02-10-2025,Team C
+35,99,bogie,Testing,in-progress,high,11-09-2025,07-10-2025,Team B
+36,14,doors,Replacement,closed,medium,06-09-2025,29-09-2025,Team C
+37,22,brake system,Repair,closed,low,30-08-2025,27-09-2025,Team A
+38,51,signalling,Inspection,open,low,02-09-2025,05-10-2025,Team C
+39,23,telecom,Inspection,closed,medium,28-08-2025,07-10-2025,Team C
+40,48,brake system,Testing,in-progress,low,09-09-2025,09-10-2025,Team A
+41,71,bogie,Testing,in-progress,high,12-09-2025,06-10-2025,Team A
+42,50,bogie,Replacement,open,emergency,30-08-2025,29-09-2025,Team C
+43,89,brake system,Testing,closed,emergency,27-08-2025,27-09-2025,Team C
+44,13,bogie,Inspection,in-progress,low,08-09-2025,07-10-2025,Team B
+45,85,doors,Inspection,open,medium,11-09-2025,08-10-2025,Team A
+46,10,bogie,Repair,open,high,28-08-2025,30-09-2025,Team C
+47,55,signalling,Repair,in-progress,emergency,20-09-2025,09-10-2025,Team A
+48,9,doors,Inspection,in-progress,high,02-09-2025,06-10-2025,Team B
+49,79,HVAC,Inspection,closed,low,29-08-2025,05-10-2025,Team C
+50,52,bogie,Replacement,open,low,10-09-2025,08-10-2025,Team C
+51,2,bogie,Replacement,in-progress,emergency,11-09-2025,27-09-2025,Team C
+52,25,signalling,Inspection,open,low,17-09-2025,08-10-2025,Team A
+53,13,signalling,Testing,closed,medium,01-09-2025,05-10-2025,Team B
+54,98,telecom,Repair,in-progress,low,18-09-2025,08-10-2025,Team A
+55,51,brake system,Inspection,closed,low,30-08-2025,26-09-2025,Team C
+56,58,brake system,Testing,open,low,05-09-2025,01-10-2025,Team B
+57,34,brake system,Inspection,closed,high,17-09-2025,04-10-2025,Team C
+58,35,signalling,Repair,closed,high,01-09-2025,02-10-2025,Team C
+59,3,brake system,Repair,open,emergency,01-09-2025,06-10-2025,Team A
+60,59,brake system,Replacement,closed,emergency,09-09-2025,01-10-2025,Team C
+61,70,HVAC,Replacement,open,emergency,10-09-2025,27-09-2025,Team B
+62,48,brake system,Replacement,in-progress,low,05-09-2025,04-10-2025,Team C
+63,64,bogie,Replacement,open,high,18-09-2025,06-10-2025,Team C
+64,19,telecom,Repair,open,medium,17-09-2025,01-10-2025,Team A
+65,67,signalling,Testing,in-progress,low,11-09-2025,26-09-2025,Team B
+66,82,doors,Testing,open,low,23-09-2025,09-10-2025,Team A
+67,73,telecom,Testing,in-progress,low,03-09-2025,02-10-2025,Team C
+68,76,HVAC,Inspection,in-progress,medium,16-09-2025,09-10-2025,Team A
+69,5,signalling,Replacement,open,emergency,18-09-2025,03-10-2025,Team A
+70,67,signalling,Replacement,closed,medium,17-09-2025,27-09-2025,Team A
+71,11,bogie,Repair,closed,emergency,15-09-2025,02-10-2025,Team A
+72,94,telecom,Repair,in-progress,medium,15-09-2025,01-10-2025,Team C
+73,68,telecom,Inspection,closed,high,28-08-2025,06-10-2025,Team C
+74,69,brake system,Inspection,closed,low,08-09-2025,10-10-2025,Team B
+75,1,bogie,Testing,open,low,23-09-2025,09-10-2025,Team A
+76,91,brake system,Repair,in-progress,low,21-09-2025,03-10-2025,Team A
+77,92,brake system,Replacement,in-progress,emergency,21-09-2025,07-10-2025,Team B
+78,63,signalling,Testing,open,medium,18-09-2025,28-09-2025,Team A
+79,29,telecom,Replacement,closed,high,13-09-2025,02-10-2025,Team B
+80,82,brake system,Testing,in-progress,medium,03-09-2025,28-09-2025,Team C
+81,12,HVAC,Replacement,closed,low,21-09-2025,07-10-2025,Team B
+82,77,HVAC,Inspection,in-progress,high,03-09-2025,04-10-2025,Team A
+83,41,telecom,Testing,in-progress,high,19-09-2025,06-10-2025,Team B
+84,2,HVAC,Replacement,in-progress,low,23-09-2025,30-09-2025,Team C
+85,37,signalling,Replacement,in-progress,medium,12-09-2025,05-10-2025,Team A
+86,45,bogie,Repair,closed,low,12-09-2025,08-10-2025,Team C
+87,80,doors,Testing,closed,medium,15-09-2025,10-10-2025,Team C
+88,48,brake system,Replacement,closed,high,08-09-2025,04-10-2025,Team B
+89,24,doors,Repair,closed,high,11-09-2025,08-10-2025,Team C
+90,99,bogie,Replacement,open,low,12-09-2025,03-10-2025,Team A
+91,22,bogie,Testing,in-progress,high,24-09-2025,03-10-2025,Team C
+92,100,signalling,Inspection,in-progress,emergency,19-09-2025,02-10-2025,Team C
+93,11,HVAC,Testing,in-progress,high,30-08-2025,09-10-2025,Team B
+94,58,HVAC,Testing,open,emergency,12-09-2025,07-10-2025,Team C
+95,46,bogie,Replacement,closed,high,13-09-2025,05-10-2025,Team B
+96,29,signalling,Replacement,in-progress,low,28-08-2025,30-09-2025,Team B
+97,35,signalling,Testing,closed,low,01-09-2025,01-10-2025,Team A
+98,15,telecom,Repair,closed,emergency,07-09-2025,09-10-2025,Team A
+99,60,brake system,Repair,open,low,26-08-2025,29-09-2025,Team A
+100,95,HVAC,Repair,open,high,03-09-2025,09-10-2025,Team A
+101,42,bogie,Replacement,closed,high,25-09-2025,10-10-2025,Team B
+102,43,telecom,Replacement,in-progress,low,29-08-2025,27-09-2025,Team C
+103,80,doors,Testing,in-progress,high,28-08-2025,30-09-2025,Team A
+104,74,HVAC,Inspection,open,medium,01-09-2025,10-10-2025,Team A
+105,49,brake system,Replacement,open,medium,07-09-2025,03-10-2025,Team A
+106,64,signalling,Testing,open,high,13-09-2025,29-09-2025,Team C
+107,32,bogie,Testing,open,low,10-09-2025,08-10-2025,Team A
+108,64,HVAC,Inspection,open,emergency,25-09-2025,03-10-2025,Team C
+109,2,doors,Repair,open,low,26-08-2025,05-10-2025,Team B
+110,24,brake system,Testing,open,emergency,14-09-2025,05-10-2025,Team B
+111,87,brake system,Testing,in-progress,low,16-09-2025,06-10-2025,Team B
+112,66,telecom,Testing,open,high,01-09-2025,02-10-2025,Team C
+113,38,HVAC,Repair,open,medium,13-09-2025,01-10-2025,Team A
+114,31,doors,Repair,in-progress,low,29-08-2025,26-09-2025,Team A
+115,26,brake system,Inspection,in-progress,emergency,28-08-2025,03-10-2025,Team A
+116,29,bogie,Replacement,closed,medium,26-08-2025,09-10-2025,Team A
+117,67,brake system,Repair,open,emergency,30-08-2025,01-10-2025,Team A
+118,78,doors,Replacement,open,high,12-09-2025,28-09-2025,Team C
+119,25,signalling,Replacement,open,medium,08-09-2025,03-10-2025,Team B
+120,48,signalling,Repair,open,emergency,02-09-2025,29-09-2025,Team A
+121,65,telecom,Testing,closed,low,02-09-2025,01-10-2025,Team B
+122,53,HVAC,Inspection,in-progress,high,08-09-2025,08-10-2025,Team C
+123,67,doors,Replacement,in-progress,high,31-08-2025,30-09-2025,Team C
+124,90,telecom,Testing,open,high,06-09-2025,01-10-2025,Team A
+125,18,brake system,Repair,open,low,28-08-2025,30-09-2025,Team C
+126,9,brake system,Replacement,open,low,18-09-2025,10-10-2025,Team B
+127,38,signalling,Replacement,closed,medium,10-09-2025,05-10-2025,Team A
+128,87,telecom,Replacement,closed,low,18-09-2025,07-10-2025,Team A
+129,21,signalling,Testing,in-progress,medium,17-09-2025,10-10-2025,Team B
+130,65,bogie,Testing,open,high,12-09-2025,30-09-2025,Team A
+131,21,signalling,Testing,open,medium,10-09-2025,04-10-2025,Team A
+132,27,bogie,Replacement,open,emergency,25-09-2025,26-09-2025,Team B
+133,70,brake system,Replacement,open,high,13-09-2025,04-10-2025,Team A
+134,44,telecom,Inspection,closed,high,15-09-2025,29-09-2025,Team A
+135,100,bogie,Inspection,in-progress,medium,04-09-2025,27-09-2025,Team B
+136,28,telecom,Testing,in-progress,high,04-09-2025,29-09-2025,Team C
+137,45,telecom,Testing,closed,low,31-08-2025,07-10-2025,Team B
+138,17,bogie,Repair,open,emergency,13-09-2025,02-10-2025,Team A
+139,40,HVAC,Testing,in-progress,medium,02-09-2025,03-10-2025,Team B
+140,3,signalling,Inspection,in-progress,medium,20-09-2025,04-10-2025,Team A
+141,76,bogie,Inspection,closed,high,30-08-2025,08-10-2025,Team A
+142,76,brake system,Inspection,open,low,11-09-2025,29-09-2025,Team B
+143,66,telecom,Replacement,in-progress,high,27-08-2025,07-10-2025,Team A
+144,46,doors,Replacement,open,high,21-09-2025,03-10-2025,Team C
+145,86,bogie,Testing,in-progress,medium,06-09-2025,06-10-2025,Team A
+146,87,signalling,Repair,closed,high,08-09-2025,07-10-2025,Team B
+147,30,telecom,Repair,open,emergency,25-09-2025,03-10-2025,Team C
+148,69,HVAC,Repair,closed,high,27-08-2025,03-10-2025,Team C
+149,9,brake system,Replacement,in-progress,high,13-09-2025,08-10-2025,Team A
+150,85,HVAC,Inspection,closed,medium,07-09-2025,26-09-2025,Team B
+151,11,doors,Inspection,closed,high,07-09-2025,27-09-2025,Team A
+152,69,bogie,Replacement,closed,low,04-09-2025,30-09-2025,Team A
+153,99,telecom,Repair,in-progress,medium,25-09-2025,29-09-2025,Team B
+154,91,bogie,Repair,open,high,23-09-2025,02-10-2025,Team B
+155,66,signalling,Testing,closed,emergency,05-09-2025,07-10-2025,Team A
+156,88,bogie,Testing,open,emergency,12-09-2025,29-09-2025,Team C
+157,31,brake system,Repair,in-progress,medium,21-09-2025,30-09-2025,Team A
+158,33,doors,Replacement,open,medium,29-08-2025,06-10-2025,Team C
+159,39,HVAC,Repair,closed,high,11-09-2025,05-10-2025,Team A
+160,94,doors,Testing,closed,low,20-09-2025,01-10-2025,Team B
+161,46,telecom,Repair,closed,high,24-09-2025,03-10-2025,Team C
+162,37,bogie,Replacement,closed,emergency,17-09-2025,04-10-2025,Team B
+163,92,telecom,Inspection,closed,low,13-09-2025,04-10-2025,Team B
+164,60,HVAC,Replacement,closed,low,15-09-2025,01-10-2025,Team B
+165,31,telecom,Replacement,in-progress,low,19-09-2025,02-10-2025,Team B
+166,11,signalling,Testing,in-progress,high,11-09-2025,07-10-2025,Team B
+167,87,doors,Replacement,in-progress,emergency,15-09-2025,04-10-2025,Team A
+168,2,HVAC,Replacement,open,medium,15-09-2025,01-10-2025,Team C
+169,27,HVAC,Testing,open,high,01-09-2025,01-10-2025,Team A
+170,99,HVAC,Testing,in-progress,medium,28-08-2025,07-10-2025,Team A
+171,2,brake system,Inspection,open,low,13-09-2025,03-10-2025,Team A
+172,21,doors,Repair,open,low,17-09-2025,30-09-2025,Team B
+173,58,telecom,Replacement,closed,high,01-09-2025,30-09-2025,Team A
+174,5,HVAC,Testing,closed,emergency,26-08-2025,30-09-2025,Team C
+175,52,doors,Inspection,open,low,30-08-2025,29-09-2025,Team A
+176,45,HVAC,Repair,open,medium,12-09-2025,27-09-2025,Team B
+177,85,signalling,Testing,in-progress,medium,17-09-2025,07-10-2025,Team C
+178,93,signalling,Repair,open,high,30-08-2025,29-09-2025,Team C
+179,20,signalling,Repair,closed,medium,23-09-2025,01-10-2025,Team C
+180,61,bogie,Replacement,open,emergency,10-09-2025,27-09-2025,Team C
+181,38,HVAC,Replacement,in-progress,low,25-09-2025,07-10-2025,Team A
+182,20,bogie,Testing,closed,medium,02-09-2025,04-10-2025,Team B
+183,25,doors,Repair,closed,medium,08-09-2025,08-10-2025,Team C
+184,2,bogie,Testing,closed,low,24-09-2025,07-10-2025,Team C
+185,32,doors,Testing,closed,high,26-08-2025,28-09-2025,Team B
+186,26,doors,Repair,open,medium,14-09-2025,29-09-2025,Team A
+187,70,doors,Testing,in-progress,high,18-09-2025,29-09-2025,Team C
+188,41,telecom,Repair,open,high,05-09-2025,07-10-2025,Team A
+189,67,bogie,Repair,open,medium,23-09-2025,03-10-2025,Team A
+190,97,telecom,Repair,closed,emergency,01-09-2025,30-09-2025,Team A
+191,1,HVAC,Repair,in-progress,high,26-08-2025,07-10-2025,Team A
+192,51,bogie,Inspection,closed,medium,05-09-2025,05-10-2025,Team C
+193,5,HVAC,Repair,open,high,24-09-2025,08-10-2025,Team C
+194,13,HVAC,Replacement,open,low,01-09-2025,04-10-2025,Team A
+195,19,doors,Replacement,closed,emergency,25-09-2025,05-10-2025,Team A
+196,12,bogie,Replacement,open,emergency,26-08-2025,30-09-2025,Team B
+197,48,HVAC,Repair,open,low,18-09-2025,27-09-2025,Team B
+198,25,signalling,Replacement,closed,low,19-09-2025,09-10-2025,Team B
+199,57,HVAC,Inspection,open,high,30-08-2025,29-09-2025,Team C
+200,35,signalling,Testing,in-progress,low,25-09-2025,30-09-2025,Team B
